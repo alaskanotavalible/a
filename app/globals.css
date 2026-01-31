@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background: rgba(209, 139, 44, 0.25);
+}
+
+body {
+  background: #ffffff;
+  color: #0b0d10;
+}
+
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+* {
+  text-rendering: geometricPrecision;
+}
