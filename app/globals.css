@@ -2,27 +2,320 @@
 @tailwind components;
 @tailwind utilities;
 
+/* -- Design tokens / variables -- */
 :root {
-  color-scheme: light;
+  /* === СВЕТЛАЯ ТЕМА (Основная) === */
+  --accent: #ff8c00;
+  --accent-2: #e07b00;
+  
+  /* Светлый фон: чистый белый/светло-серый */
+  --bg: #ffffff; 
+  
+  /* Текст */
+  --text-main: #0a0a0a;
+  --text-muted: #666666;
+  
+  /* Карточки и границы */
+  --card-bg: #ffffff;
+  --header-bg: rgba(255, 255, 255, 0.85); /* Светлое стекло */
+  --muted-border: rgba(0, 0, 0, 0.1);
+  
+  /* Тени для светлой темы */
+  --shadow-1: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-2: 0 10px 30px rgba(0, 0, 0, 0.1);
+  
+  --glass-effect: blur(14px) saturate(140%);
+  
+  /* Радиусы и шрифты */
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+  --sf-stack: -apple-system, "SF Pro Text", "SF Pro Display", ".SFNSText", "Segoe UI", Roboto, "Helvetica Neue", Arial, system-ui, sans-serif;
 }
 
+/* === ТЕМНАЯ ТЕМА (Твой стиль) === */
+.dark {
+  --bg: linear-gradient(180deg, #050505 0%, #0a0a0b 100%);
+  
+  --text-main: #eaeaea;
+  --text-muted: #888282;
+  
+  --card-bg: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+  --header-bg: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  --muted-border: rgba(255, 255, 255, 0.06);
+  
+  --shadow-1: 0 6px 18px rgba(0, 0, 0, 0.6);
+  --shadow-2: 0 10px 30px rgba(0, 0, 0, 0.65);
+}
+
+/* -- Typography reset & base -- */
+html, body {
+  height: 100%;
+}
 html {
-  scroll-behavior: smooth;
-}
-
-::selection {
-  background: rgba(209, 139, 44, 0.25);
+  font-family: var(--sf-stack);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-size: 16px;
 }
 
 body {
-  background: #ffffff;
-  color: #0b0d10;
+  background: var(--bg);
+  color: var(--text-main);
+  margin: 0;
+  line-height: 1.45;
+  -webkit-text-size-adjust: 100%;
+  letter-spacing: 0.1px;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
-a {
-  -webkit-tap-highlight-color: transparent;
+/* -- Layout container -- */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
-* {
-  text-rendering: geometricPrecision;
+/* -- Header: sleek glass bar -- */
+.site-header {
+  position: fixed;
+  top: 12px;
+  left: 24px;
+  right: 24px;
+  z-index: 1000;
+  padding: 12px 18px;
+  border-radius: 14px;
+  
+  background: var(--header-bg);
+  backdrop-filter: var(--glass-effect);
+  -webkit-backdrop-filter: var(--glass-effect);
+  
+  border: 1px solid var(--muted-border);
+  box-shadow: var(--shadow-1);
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+/* Инженерная сетка на фон (немного разная для темной и светлой) */
+.bg-grid-pattern {
+  background-size: 50px 50px;
+  background-image: 
+      linear-gradient(to right, var(--muted-border) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--muted-border) 1px, transparent 1px);
+  opacity: 0.3;
+}
+
+/* header inner layout */
+.header-inner {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* logo */
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.logo {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-main);
+  text-decoration: none;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.logo span {
+  color: var(--accent);
+  font-weight: 900;
+  letter-spacing: 0.6px;
+}
+
+.logo-img {
+  height: 32px;
+  width: auto;
+  border-radius: 6px;
+  object-fit: contain;
+}
+
+/* main navigation */
+.main-nav ul {
+  display: flex;
+  gap: 18px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  align-items: center;
+}
+
+.main-nav li {
+  border-radius: 10px;
+  overflow: hidden;
+  transition: background-color 200ms ease, box-shadow 200ms ease;
+}
+
+.main-nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: transform 200ms cubic-bezier(.2,.9,.3,1), color 160ms ease, background-color 160ms ease;
+}
+
+/* Ховер эффекты для меню */
+.main-nav li:hover {
+  background: rgba(0,0,0,0.05); /* Светлый ховер */
+}
+.dark .main-nav li:hover {
+  background: linear-gradient(180deg, rgba(0,0,0,0.30), rgba(0,0,0,0.20));
+}
+
+.main-nav li:hover a,
+.main-nav a:hover {
+  color: var(--text-main); /* В светлой теме становится черным, в темной белым */
+  transform: translateY(-2px);
+}
+.dark .main-nav li:hover a {
+  color: #fff;
+}
+
+/* primary buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-weight: 800;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: 1px solid var(--muted-border);
+  background: transparent;
+  color: var(--text-main);
+  transition: transform 200ms cubic-bezier(.2,.9,.3,1), box-shadow 200ms ease, opacity 200ms ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.btn--accent {
+  background: linear-gradient(180deg, var(--accent), var(--accent-2));
+  color: #fff; /* Всегда белый текст на оранжевом */
+  border: 1px solid rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(255,140,0,0.3);
+}
+.btn--ghost {
+  background: transparent;
+  border: 1px solid var(--muted-border);
+  color: var(--text-muted);
+}
+.btn:hover { transform: translateY(-3px); }
+
+/* page main spacing */
+.page-main {
+  padding-top: 92px;
+  padding-bottom: 40px;
+}
+
+/* sections and cards */
+.section {
+  background: var(--card-bg);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--muted-border);
+  padding: 28px;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow-1);
+}
+
+/* products grid / cards */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 32px;
+  margin-top: 40px;
+  padding-bottom: 40px;
+}
+.product-card {
+  background: var(--card-bg);
+  border-radius: var(--radius-md);
+  padding: 22px;
+  border: 1px solid var(--muted-border);
+  transition: transform 300ms cubic-bezier(.2,.9,.3,1), box-shadow 260ms ease;
+  will-change: transform;
+  box-shadow: var(--shadow-1);
+}
+.product-card:hover {
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: var(--shadow-2);
+}
+.product-img {
+  height: 200px;
+  background: rgba(0,0,0,0.03); /* Светлый фон для фото */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  margin-bottom: 16px;
+  border-radius: 12px;
+  border: 1px solid var(--muted-border);
+  overflow: hidden;
+}
+.dark .product-img {
+  background: linear-gradient(180deg, #0f0f10, #151516);
+  border: 1px solid rgba(255,255,255,0.03);
+}
+
+/* footer */
+.site-footer {
+  background: transparent;
+  padding: 80px 0;
+  margin-top: 60px;
+  border-top: 1px solid var(--muted-border);
+  color: var(--text-muted);
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 32px;
+}
+.footer-col h4 { color: var(--text-main); margin-bottom: 16px; }
+.footer-col a { color: var(--text-muted); text-decoration: none; display: block; margin-bottom: 10px; }
+.footer-col a:hover { color: var(--accent); }
+
+/* responsive tweaks */
+@media (max-width: 880px) {
+  .site-header { left: 12px; right: 12px; padding: 10px 14px; top: 10px; }
+  .header-inner { gap: 12px; }
+  .main-nav ul { gap: 10px; }
+  .product-img { height: 160px; }
+  .container { padding: 0 16px; }
+}
+@media (max-width: 480px) {
+  .logo { font-size: 1rem; }
+  .btn { padding: 8px 14px; font-size: 0.85rem; }
+  .page-main { padding-top: 88px; }
+}
+
+/* Prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+
+/* Animation */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+.animate-marquee {
+  animation: marquee 25s linear infinite;
 }

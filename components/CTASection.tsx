@@ -1,82 +1,65 @@
-"use client";
-
-import { Button, Card, Container, SubtleGlow } from "./ui";
-import { useModal } from "./ModalProvider";
-import { motion } from "framer-motion";
+import Link from "next/link";
+import { Container, Button } from "@/components/ui";
 
 export default function CTASection() {
-  const { open } = useModal();
-
   return (
-    <section className="relative py-12 sm:py-16">
-      <Container>
-        <div className="relative overflow-hidden rounded-3xl border border-stone-100 bg-white shadow-premium">
-          <SubtleGlow />
+    // bg-background + border-border
+    <section className="py-16 sm:py-24 bg-background relative overflow-hidden border-t border-border transition-colors duration-300">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-heat/10 blur-[120px] rounded-full pointer-events-none" />
 
-          <div className="grid gap-8 p-8 sm:p-10 md:grid-cols-2 md:items-center">
-            <div>
-              <div className="text-xs font-medium tracking-premium text-stone-500">
+      <Container className="relative z-10">
+        <div className="relative group">
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-heat to-orange-600 rounded-[24px] blur opacity-20 group-hover:opacity-40 transition duration-1000" />
+            
+            {/* bg-card для контейнера */}
+            <div className="relative overflow-hidden rounded-[24px] bg-card border border-border p-8 sm:p-12 md:flex md:items-center md:justify-between md:gap-10">
+            
+            <div className="relative z-10 md:flex-1">
+                <span className="text-heat font-bold uppercase tracking-widest text-xs mb-3 block">
                 Быстрая заявка
-              </div>
-              <h3 className="mt-2 text-2xl font-semibold tracking-premium text-ink sm:text-3xl">
-                Рассчитаем мощность и подберём модель под ваш объект
-              </h3>
-              <p className="mt-3 max-w-lg text-sm leading-relaxed text-stone-600 sm:text-base">
-                Квартира, дом, ЖК, коммерция — учитываем площадь, теплопотери и
-                тип подключения. Получите расчёт и рекомендации без лишней
-                переписки.
-              </p>
-
-              <div className="mt-5 flex flex-col gap-2 sm:flex-row">
-                <Button onClick={() => open("request")} className="sm:min-w-[220px]">
-                  Запросить расчёт
-                </Button>
-                <Button variant="outline" onClick={() => open("call")}>
-                  Заказать звонок
-                </Button>
-              </div>
-
-              <div className="mt-4 text-xs text-stone-500">
-                Доверие: гарантия 10 лет · проверка герметичности · стабильная
-                теплоотдача
-              </div>
+                </span>
+                <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
+                Рассчитаем мощность и подберём модель
+                </h2>
+                <p className="mt-4 text-lg leading-relaxed text-muted">
+                Квартира, дом, ЖК, коммерция. Получите точный расчёт и рекомендации без лишней переписки.
+                </p>
+                
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <Link href="/contacts">
+                    <Button className="!bg-heat !text-white hover:!bg-orange-600 border-0 font-bold py-4 px-8 shadow-lg">
+                        Запросить расчёт
+                    </Button>
+                </Link>
+                <a href="tel:+77172677711">
+                    <Button variant="outline" className="bg-transparent border-border text-foreground hover:bg-secondary py-4 px-8">
+                        Заказать звонок
+                    </Button>
+                </a>
+                </div>
             </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.35 }}
-            >
-              <Card className="p-6">
-                <div className="text-sm font-semibold tracking-premium text-ink">
-                  Что вы получите
+            <div className="relative z-10 mt-10 md:mt-0 md:w-[400px]">
+                {/* Карточка внутри: bg-secondary/50 или bg-background */}
+                <div className="rounded-2xl border border-border bg-secondary/30 p-6 backdrop-blur-md">
+                <div className="text-lg font-bold text-foreground mb-4">
+                    Что вы получите
                 </div>
+                <ul className="grid gap-3">
+                    {[
+                    "Подбор количества секций",
+                    "Рекомендации по монтажу",
+                    "Коммерческое предложение",
+                    ].map((item) => (
+                    <li key={item} className="flex items-center gap-3 rounded-xl bg-background p-3 text-sm text-muted border border-border shadow-sm">
+                        <span className="text-heat font-bold">✓</span> {item}
+                    </li>
+                    ))}
+                </ul>
+                </div>
+            </div>
 
-                <div className="mt-4 grid gap-3 text-sm text-stone-700">
-                  <div className="rounded-xl bg-stone-50 px-4 py-3">
-                    ✅ Подбор количества секций и высоты
-                  </div>
-                  <div className="rounded-xl bg-stone-50 px-4 py-3">
-                    ✅ Рекомендации по монтажу и подключению
-                  </div>
-                  <div className="rounded-xl bg-stone-50 px-4 py-3">
-                        ✅ Коммерческое предложение для проектов
-                  </div>
-                  <div className="rounded-xl bg-heat/10 px-4 py-3 text-ink">
-                    ⚡ Ответ обычно в течение рабочего дня
-                  </div>
-                </div>
-
-                <div className="mt-5 flex gap-2">
-                  <Button variant="outline" onClick={() => open("price")}>
-                    Скачать прайс
-                  </Button>
-                  <Button onClick={() => open("request")}>Оставить заявку</Button>
-                </div>
-              </Card>
-            </motion.div>
-          </div>
+            </div>
         </div>
       </Container>
     </section>

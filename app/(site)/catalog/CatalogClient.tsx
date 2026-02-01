@@ -3,16 +3,17 @@
 import { useMemo, useState } from "react";
 import { products } from "@/data/products";
 import { Container, Button } from "@/components/ui";
-import SectionTitle from "@/components/SectionTitle";
 import ProductCard from "@/components/ProductCard";
 import Filters, { defaultFilters, FilterState } from "@/components/Filters";
 
 export default function CatalogClient() {
+  // Инициализация фильтров с учетом максимальной цены из данных
   const [filters, setFilters] = useState<FilterState>({
     ...defaultFilters,
     maxPrice: Math.max(...products.map((p) => p.priceKzt)),
   });
 
+  // Логика фильтрации
   const filtered = useMemo(() => {
     return products.filter((p) => {
       if (filters.heightMm !== "all" && p.heightMm !== filters.heightMm)
@@ -26,52 +27,72 @@ export default function CatalogClient() {
     });
   }, [filters]);
 
+  const resetFilters = () => {
+    setFilters({
+      ...defaultFilters,
+      maxPrice: Math.max(...products.map((p) => p.priceKzt)),
+    });
+  };
+
   return (
-    <section className="py-10 sm:py-14">
-      <Container>
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <SectionTitle
-            eyebrow="Каталог"
-            title="Биметаллические радиаторы"
-            description="Подберите высоту, мощность и количество секций под ваш объект. Нажмите “Запросить расчёт” — мы подскажем оптимальный вариант."
-          />
+    // bg-background — основа для смены тем
+    <section className="py-20 bg-background min-h-screen relative overflow-hidden transition-colors duration-300">
+      
+      {/* Фоновые эффекты (адаптированы) */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-heat/10 blur-[120px] rounded-full pointer-events-none opacity-40 dark:opacity-60" />
+
+      <Container className="relative z-10">
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between mb-10 pt-10">
+          
+          <div>
+             <div className="text-heat text-xs font-bold uppercase tracking-widest mb-2">Каталог</div>
+             <h1 className="text-4xl font-bold text-foreground">Биметаллические радиаторы</h1>
+             <p className="text-muted mt-2 max-w-xl">Подберите высоту, мощность и количество секций под ваш объект.</p>
+          </div>
 
           <div className="flex gap-2">
             <Button
               variant="outline"
-              onClick={() =>
-                setFilters({
-                  ...defaultFilters,
-                  maxPrice: Math.max(...products.map((p) => p.priceKzt)),
-                })
-              }
+              className="bg-transparent border-border text-foreground hover:bg-secondary"
+              onClick={resetFilters}
             >
-              Сбросить
+              Сбросить фильтры
             </Button>
           </div>
         </div>
 
-        <div className="mt-8 grid gap-4 lg:grid-cols-[360px_1fr]">
-          <div className="lg:sticky lg:top-[92px] lg:h-fit">
+        <div className="mt-8 grid gap-8 lg:grid-cols-[320px_1fr]">
+          {/* Колонка фильтров (Sticky) */}
+          <div className="lg:sticky lg:top-[100px] lg:h-fit">
+            {/* ВАЖНО: Убедись, что внутри компонента Filters 
+                используются классы bg-card, text-foreground и border-border 
+            */}
             <Filters products={products} value={filters} onChange={setFilters} />
           </div>
 
+          {/* Сетка товаров */}
           <div>
-            <div className="mb-4 text-sm text-stone-600">
-              Найдено моделей: <span className="font-semibold text-ink">{filtered.length}</span>
+            <div className="mb-6 text-sm text-muted">
+              Найдено моделей: <span className="font-bold text-foreground ml-1">{filtered.length}</span>
             </div>
 
             {filtered.length === 0 ? (
-              <div className="rounded-2xl border border-stone-100 bg-white p-8 text-center shadow-soft">
-                <div className="text-lg font-semibold tracking-premium text-ink">
+              <div className="rounded-2xl border border-border bg-card p-10 text-center shadow-sm">
+                <div className="text-xl font-bold text-foreground mb-2">
                   Ничего не найдено
                 </div>
-                <div className="mt-2 text-sm text-stone-600">
-                  Ослабьте фильтры или сбросьте их.
+                <div className="text-sm text-muted mb-6">
+                  Попробуйте изменить параметры фильтрации.
                 </div>
+                 <Button 
+                   onClick={resetFilters}
+                   className="!bg-heat !text-white border-0 font-bold"
+                 >
+                    Очистить фильтры
+                 </Button>
               </div>
             ) : (
-              <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+              <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
                 {filtered.map((p) => (
                   <ProductCard key={p.id} product={p} />
                 ))}

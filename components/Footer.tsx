@@ -1,79 +1,103 @@
-"use client";
-
 import Link from "next/link";
-import { Button, Container, Divider } from "./ui";
-import { useModal } from "./ModalProvider";
+import { Container, Button } from "@/components/ui";
+
+const links = [
+  { label: "Каталог", href: "/catalog" },
+  { label: "О компании", href: "/about" },
+  { label: "Для дилеров", href: "/dealers" },
+  { label: "Контакты", href: "/contacts" }
+];
 
 export default function Footer() {
-  const { open } = useModal();
-
   return (
-    <footer className="mt-16 border-t border-stone-100 bg-white">
-      <Container className="py-10">
-        <div className="grid gap-8 md:grid-cols-3">
+    // bg-background, border-border, text-muted
+    <footer className="border-t border-border bg-background py-12 sm:py-16 transition-colors duration-300">
+      <Container>
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          {/* 1. Логотип и описание */}
           <div>
-            <div className="text-sm font-semibold tracking-premium text-ink">
+            <div className="text-lg font-bold tracking-widest text-foreground uppercase">
               Tengri Thermo
             </div>
-            <p className="mt-2 max-w-sm text-sm leading-relaxed text-stone-600">
-              Надёжные и стильные биметаллические радиаторы для квартир, домов и
-              проектов в Казахстане. Премиальный подход к теплу.
+            <p className="mt-4 text-sm leading-relaxed text-muted">
+              Надёжные биметаллические радиаторы для квартир, домов и проектов в Казахстане.
             </p>
-
-            <div className="mt-4 flex gap-2">
-              <Button variant="outline" onClick={() => open("price")}>
-                Скачать прайс
-              </Button>
-              <Button variant="dark" onClick={() => open("call")}>
-                Позвонить
-              </Button>
-            </div>
           </div>
 
+          {/* 2. Навигация */}
           <div>
-            <div className="text-xs font-medium tracking-premium text-stone-500">
+            <div className="text-sm font-bold tracking-widest text-muted uppercase">
               Навигация
             </div>
-            <div className="mt-3 grid gap-2 text-sm">
-              <Link className="text-stone-700 hover:text-ink" href="/catalog">
-                Каталог
-              </Link>
-              <Link className="text-stone-700 hover:text-ink" href="/about">
-                О компании
-              </Link>
-              <Link className="text-stone-700 hover:text-ink" href="/dealers">
-                Для дилеров / партнёров
-              </Link>
-              <Link className="text-stone-700 hover:text-ink" href="/contacts">
-                Контакты
-              </Link>
+            <ul className="mt-4 grid gap-2 text-sm">
+              {links.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="text-muted hover:text-heat transition-colors">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* 3. Контакты и Инстаграм */}
+          <div>
+            <div className="text-sm font-bold tracking-widest text-muted uppercase">
+              Контакты
+            </div>
+            <ul className="mt-4 grid gap-3 text-sm text-muted">
+              <li>
+                <a href="tel:+77172677711" className="hover:text-foreground transition-colors">
+                   +7 (7172) 677 711
+                </a>
+              </li>
+              <li>info@tengri-thermo.kz</li>
+              <li>Астана, Казахстан</li>
+            </ul>
+
+            {/* INSTAGRAM */}
+            <div className="mt-6">
+               <a 
+                 href="https://www.instagram.com/tengrithermo_official/" 
+                 target="_blank" 
+                 rel="noopener noreferrer" 
+                 className="flex items-center gap-2 text-muted hover:text-[#E1306C] transition-colors group"
+               >
+                   <div className="p-2 rounded-full bg-secondary border border-border group-hover:border-[#E1306C]/50 transition-colors">
+                     <svg 
+                       xmlns="http://www.w3.org/2000/svg" 
+                       width="18" 
+                       height="18" 
+                       viewBox="0 0 24 24" 
+                       fill="none" 
+                       stroke="currentColor" 
+                       strokeWidth="2" 
+                       strokeLinecap="round" 
+                       strokeLinejoin="round"
+                     >
+                        <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                        <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+                     </svg>
+                   </div>
+                   <span className="text-sm font-medium">Мы в Instagram</span>
+               </a>
             </div>
           </div>
 
+          {/* 4. Кнопка */}
           <div>
-            <div className="text-xs font-medium tracking-premium text-stone-500">
-              Контакты
-            </div>
-            <div className="mt-3 grid gap-2 text-sm text-stone-700">
-              <div>Телефон: +7 (700) 000-00-00</div>
-              <div>Email: info@tengri-thermo.kz</div>
-              <div>Казахстан · Поставки по регионам</div>
-            </div>
-
-            <div className="mt-4">
-              <Button onClick={() => open("request")}>Оставить заявку</Button>
-            </div>
+             <Link href="/contacts">
+              <Button className="w-full bg-heat text-white hover:bg-orange-600 border-0 font-bold shadow-lg">
+                Оставить заявку
+              </Button>
+            </Link>
           </div>
         </div>
 
-        <Divider className="my-8" />
-
-        <div className="flex flex-col gap-2 text-xs text-stone-500 sm:flex-row sm:items-center sm:justify-between">
-          <div>© {new Date().getFullYear()} Tengri Thermo. Все права защищены.</div>
-          <div>
-            Микро-доверие: проверка герметичности · стабильная теплоотдача ·
-            поддержка проектам
-          </div>
+        <div className="mt-12 border-t border-border pt-8 text-xs text-muted flex flex-col sm:flex-row justify-between gap-4">
+          <div>© 2026 Tengri Thermo. Все права защищены.</div>
+          <div>Сделано в Казахстане 🇰🇿</div>
         </div>
       </Container>
     </footer>

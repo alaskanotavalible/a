@@ -1,53 +1,63 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  // 1. Включаем режим "class", чтобы next-themes мог переключать классы
+  darkMode: "class",
+  
   content: [
-    "./app/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-    "./data/**/*.{ts,tsx}",
-    "./lib/**/*.{ts,tsx}"
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    container: {
+      center: true,
+      padding: "1rem",
+    },
     extend: {
       colors: {
-        ink: {
-          DEFAULT: "#0B0D10",
-          soft: "#11151B"
-        },
-        paper: "#FFFFFF",
+        // === НАШИ НОВЫЕ ДИНАМИЧЕСКИЕ ЦВЕТА ===
+        // Они берут значения из globals.css (var(--...))
+        
+        heat: "var(--accent)",          // Оранжевый
+        background: "var(--bg)",        // Фон страницы (Белый <-> Черный)
+        foreground: "var(--text-main)", // Текст (Черный <-> Белый)
+        muted: "var(--text-muted)",     // Серый текст
+        
+        card: "var(--card-bg)",         // Фон карточек
+        header: "var(--header-bg)",     // Фон хедера
+        border: "var(--muted-border)",  // Цвет границ
+
+        // === СОВМЕСТИМОСТЬ (ЧТОБЫ НИЧЕГО НЕ СЛОМАЛОСЬ) ===
+        // Мы перенаправляем старые названия на новые переменные
+        paper: "var(--bg)",        // Раньше был черный, теперь динамический
+        ink: "var(--text-main)",   // Раньше был белый, теперь динамический
+        
+        // Оставляем палитру stone для серых элементов, если где-то используется напрямую
         stone: {
-          50: "#F7F7F7",
-          100: "#EFEFEF",
-          200: "#E3E3E3",
-          300: "#CFCFCF",
-          400: "#AFAFAF",
-          500: "#8C8C8C",
-          600: "#6A6A6A",
-          700: "#4A4A4A",
-          800: "#2B2B2B",
-          900: "#141414"
+          50: "#f9fafb",
+          100: "#f3f4f6",
+          200: "#e5e7eb",
+          500: "#6b7280",
+          600: "#4b5563",
+          700: "#374151",
         },
-        heat: {
-          DEFAULT: "#D18B2C",
-          soft: "#F2B35B"
-        }
       },
-      borderRadius: {
-        xl2: "1.25rem",
-        xl3: "1.75rem"
+      
+      // Анимации оставляем как есть
+      animation: {
+        marquee: "marquee 25s linear infinite",
+        pulse: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
       },
-      boxShadow: {
-        premium:
-          "0 1px 0 rgba(0,0,0,0.04), 0 16px 40px rgba(0,0,0,0.10)",
-        soft:
-          "0 1px 0 rgba(0,0,0,0.03), 0 10px 24px rgba(0,0,0,0.08)"
+      keyframes: {
+        marquee: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-100%)" },
+        },
       },
-      letterSpacing: {
-        premium: "0.02em"
-      }
-    }
+    },
   },
-  plugins: []
+  plugins: [],
 };
 
 export default config;

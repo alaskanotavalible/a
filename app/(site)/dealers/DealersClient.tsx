@@ -1,111 +1,86 @@
 "use client";
 
-import { Container, Card, Button, Pill } from "@/components/ui";
-import SectionTitle from "@/components/SectionTitle";
+import { Container, Button } from "@/components/ui";
 import { useModal } from "@/components/ModalProvider";
 
 export default function DealersClient() {
   const { open } = useModal();
 
   return (
-    <section className="py-10 sm:py-14">
-      <Container>
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-          <SectionTitle
-            eyebrow="Партнёрство"
-            title="Для дилеров и партнёров"
-            description="Если вы продаёте, монтируете или комплектуете объекты — мы дадим прайс, условия и поддержку, чтобы сделка закрывалась уверенно."
-          />
-          <Pill>
-            <span className="h-2 w-2 rounded-full bg-heat" />
-            B2B условия · КП · поддержка проекта
-          </Pill>
+    <section className="pt-32 pb-20 sm:pt-40 bg-background min-h-screen relative overflow-hidden transition-colors duration-300">
+       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-heat/10 blur-[120px] rounded-full pointer-events-none opacity-40" />
+
+      <Container className="relative z-10">
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between mb-12">
+          <div>
+            <span className="text-heat font-bold uppercase tracking-widest text-xs mb-2 block">
+              Партнёрство
+            </span>
+            <h1 className="text-4xl font-bold text-foreground mb-4">
+              Для дилеров и партнёров
+            </h1>
+            <p className="text-muted max-w-2xl text-lg">
+               Если вы продаёте, монтируете или комплектуете объекты — мы дадим прайс, условия и поддержку.
+            </p>
+          </div>
+          
+          <div className="flex items-center gap-2 rounded-full border border-border bg-secondary/50 px-4 py-2 text-sm text-muted whitespace-nowrap">
+            <span className="h-2 w-2 rounded-full bg-heat animate-pulse shadow-[0_0_8px_#ff8c00]" />
+            B2B условия · КП
+          </div>
         </div>
 
-        <div className="mt-8 grid gap-4 md:grid-cols-2">
-          {/* Условия сотрудничества */}
-          <Card className="p-7">
-            <div className="text-lg font-semibold tracking-premium text-ink">
+        <div className="grid gap-6 md:grid-cols-2">
+          {/* Card 1 */}
+          <div className="rounded-3xl border border-border bg-card p-8 hover:border-border transition-colors shadow-sm">
+            <div className="text-xl font-bold text-foreground mb-3">
               Условия сотрудничества
             </div>
-            <p className="mt-2 text-sm leading-relaxed text-stone-600">
-              Демо-условия: прозрачный прайс, оптовые скидки, сопровождение и
-              помощь по продукту.
+            <p className="text-muted text-sm leading-relaxed mb-6">
+              Демо-условия: прозрачный прайс, оптовые скидки, сопровождение.
             </p>
 
-            <div className="mt-4 grid gap-2 text-sm text-stone-700">
-              <div className="rounded-xl bg-stone-50 px-4 py-3">
-                ✅ Дилерские цены и объёмы
-              </div>
-              <div className="rounded-xl bg-stone-50 px-4 py-3">
-                ✅ Быстрые отгрузки и логистика
-              </div>
-              <div className="rounded-xl bg-stone-50 px-4 py-3">
-                ✅ Поддержка проектных продаж
-              </div>
-              <div className="rounded-xl bg-heat/10 px-4 py-3 text-ink">
-                🔥 Акцент: премиальный продукт легче продавать “в доверие”
+            <div className="grid gap-3 mb-8">
+              {["Дилерские цены", "Быстрые отгрузки", "Поддержка продаж"].map(item => (
+                  <div key={item} className="rounded-xl border border-border bg-secondary/40 px-4 py-3 text-sm text-foreground flex items-center gap-2">
+                      <span className="text-heat">✅</span> {item}
+                  </div>
+              ))}
+              
+              <div className="rounded-xl bg-heat/10 border border-heat/20 px-4 py-3 text-sm text-heat font-medium flex items-center gap-2">
+                <span>🔥</span> Акцент: премиальный продукт легче продавать
               </div>
             </div>
 
-            <div className="mt-5 flex gap-2">
-              <Button onClick={() => open("price")}>Скачать прайс</Button>
-              <Button variant="outline" onClick={() => open("request")}>
+            <div className="mt-auto flex gap-3">
+              <Button onClick={() => open("price")} className="bg-foreground text-background hover:bg-foreground/90 border-0 font-bold">Скачать прайс</Button>
+              <Button variant="outline" onClick={() => open("request")} className="bg-transparent border-border text-foreground hover:bg-secondary">
                 Стать партнёром
               </Button>
             </div>
-          </Card>
+          </div>
 
-          {/* Для монтажников и проектов */}
-          <Card className="p-7">
-            <div className="text-lg font-semibold tracking-premium text-ink">
+          {/* Card 2 */}
+          <div className="rounded-3xl border border-border bg-card p-8 hover:border-border transition-colors shadow-sm">
+            <div className="text-xl font-bold text-foreground mb-3">
               Для монтажников и проектов
             </div>
-            <p className="mt-2 text-sm leading-relaxed text-stone-600">
-              Подбор под объект, расчёт мощности, рекомендации по подключению и
-              комплектации. Помогаем закрывать вопросы “на месте”.
+            <p className="text-muted text-sm leading-relaxed mb-6">
+              Подбор под объект, расчёт мощности, рекомендации по подключению.
             </p>
 
-            <div className="mt-4 grid gap-2 text-sm text-stone-700">
-              <div className="rounded-xl bg-stone-50 px-4 py-3">
-                ✅ Спецификации и техническая поддержка
-              </div>
-              <div className="rounded-xl bg-stone-50 px-4 py-3">
-                ✅ КП и расчёт под объект
-              </div>
-              <div className="rounded-xl bg-stone-50 px-4 py-3">
-                ✅ Консультация по монтажу
-              </div>
+            <div className="grid gap-3 mb-8">
+                {["Спецификации", "КП и расчёт под объект", "Консультация по монтажу"].map(item => (
+                  <div key={item} className="rounded-xl border border-border bg-secondary/40 px-4 py-3 text-sm text-foreground flex items-center gap-2">
+                      <span className="text-heat">✅</span> {item}
+                  </div>
+              ))}
             </div>
 
-            <div className="mt-5">
-              <Button className="w-full" onClick={() => open("request")}>
-                Запросить условия сотрудничества
+            <div className="mt-auto">
+              <Button className="w-full bg-heat text-white hover:bg-orange-600 border-0 font-bold py-4" onClick={() => open("request")}>
+                Запросить условия
               </Button>
-            </div>
-
-            <div className="mt-4 text-xs text-stone-500">
-              Микро-доверие: сроки · качество · ответственность
-            </div>
-          </Card>
-        </div>
-
-        <div className="mt-8 rounded-3xl border border-stone-100 bg-white p-8 shadow-soft">
-          <div className="text-sm font-semibold tracking-premium text-ink">
-            Что часто спрашивают партнёры
-          </div>
-          <div className="mt-4 grid gap-3 text-sm text-stone-700 md:grid-cols-2">
-            <div className="rounded-xl bg-stone-50 px-4 py-3">
-              • Какие скидки и условия по объёмам?
-            </div>
-            <div className="rounded-xl bg-stone-50 px-4 py-3">
-              • Как быстро можно получить КП на проект?
-            </div>
-            <div className="rounded-xl bg-stone-50 px-4 py-3">
-              • Какие высоты и подключения доступны?
-            </div>
-            <div className="rounded-xl bg-stone-50 px-4 py-3">
-              • Какой срок гарантии и что он покрывает?
             </div>
           </div>
         </div>

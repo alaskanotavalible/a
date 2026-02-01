@@ -1,33 +1,35 @@
-import { Container, Card, Pill } from "@/components/ui";
-import SectionTitle from "@/components/SectionTitle";
+import { Container } from "@/components/ui";
 import CTASection from "@/components/CTASection";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({
   title: "О компании",
-  description:
-    "Tengri Thermo — производитель биметаллических радиаторов. Качество, надёжность, стиль и поддержка проектов в Казахстане.",
+  description: "Tengri Thermo — производитель биметаллических радиаторов.",
   urlPath: "/about"
 });
 
 export default function AboutPage() {
   return (
     <>
-      <section className="py-10 sm:py-14">
-        <Container>
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <SectionTitle
-              eyebrow="О компании"
-              title="Инженерия, которая выглядит дорого"
-              description="Мы строим доверие через качество продукта и ясный сервис. Премиальный минимализм — не только в дизайне, но и в подходе к работе."
-            />
-            <Pill>
-              <span className="h-2 w-2 rounded-full bg-heat" />
-              Казахстан · Поставки по регионам
-            </Pill>
+      <section className="pt-32 pb-20 sm:pt-40 bg-background relative overflow-hidden transition-colors duration-300">
+        <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-blue-500/10 blur-[120px] rounded-full pointer-events-none opacity-40" />
+
+        <Container className="relative z-10">
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between mb-12">
+            <div>
+               <span className="text-heat font-bold uppercase tracking-widest text-xs mb-2 block">
+                 О компании
+               </span>
+               <h1 className="text-4xl font-bold text-foreground mb-4">
+                 Инженерия, которая выглядит дорого
+               </h1>
+               <p className="text-muted max-w-2xl text-lg">
+                 Мы строим доверие через качество продукта и ясный сервис.
+               </p>
+            </div>
           </div>
 
-          <div className="mt-8 grid gap-4 md:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-3">
             {[
               {
                 title: "Миссия",
@@ -35,44 +37,42 @@ export default function AboutPage() {
               },
               {
                 title: "Подход",
-                text: "Сначала расчёт и подбор под объект, затем — поставка и поддержка. Всё предсказуемо."
+                text: "Сначала расчёт и подбор под объект, затем — поставка и поддержка."
               },
               {
                 title: "Результат",
                 text: "Надёжные радиаторы, которые не спорят с интерьером и служат годами."
               }
             ].map((b) => (
-              <Card key={b.title} className="p-6">
-                <div className="text-lg font-semibold tracking-premium text-ink">
+              <div key={b.title} className="rounded-3xl border border-border bg-card p-8 hover:border-border transition-colors shadow-sm">
+                <div className="text-xl font-bold text-foreground mb-3">
                   {b.title}
                 </div>
-                <p className="mt-2 text-sm leading-relaxed text-stone-600">
+                <p className="text-muted text-sm leading-relaxed mb-6">
                   {b.text}
                 </p>
-                <div className="mt-4 text-xs text-stone-500">
-                  Микро-доверие: гарантия · контроль · сервис
+                <div className="mt-auto border-t border-border pt-4 text-xs text-muted">
+                  гарантия · контроль · сервис
                 </div>
-              </Card>
+              </div>
             ))}
           </div>
 
-          <div className="mt-8 rounded-3xl border border-stone-100 bg-white p-8 shadow-soft">
-            <div className="text-sm font-semibold tracking-premium text-ink">
-              Что важно клиенту (и мы это закрываем)
+          <div className="mt-8 rounded-3xl border border-border bg-secondary/20 p-8 backdrop-blur-sm">
+            <div className="text-sm font-bold uppercase tracking-widest text-muted mb-6">
+              Что важно клиенту
             </div>
-            <div className="mt-4 grid gap-3 text-sm text-stone-700 md:grid-cols-2">
-              <div className="rounded-xl bg-stone-50 px-4 py-3">
-                ✅ Теплоотдача соответствует ожиданиям
-              </div>
-              <div className="rounded-xl bg-stone-50 px-4 py-3">
-                ✅ Радиатор выглядит аккуратно и дорого
-              </div>
-              <div className="rounded-xl bg-stone-50 px-4 py-3">
-                ✅ Понятный расчёт до покупки
-              </div>
-              <div className="rounded-xl bg-stone-50 px-4 py-3">
-                ✅ Поддержка для проектов и монтажников
-              </div>
+            <div className="grid gap-4 md:grid-cols-2">
+              {[
+                 "Теплоотдача соответствует ожиданиям",
+                 "Радиатор выглядит аккуратно и дорого",
+                 "Понятный расчёт до покупки",
+                 "Поддержка для проектов и монтажников"
+              ].map((item, i) => (
+                  <div key={i} className="rounded-xl border border-border bg-card px-5 py-4 text-sm text-foreground flex items-center gap-3">
+                      <span className="text-heat">✅</span> {item}
+                  </div>
+              ))}
             </div>
           </div>
         </Container>

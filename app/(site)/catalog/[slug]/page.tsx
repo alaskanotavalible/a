@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { products } from "@/data/products";
-import { Container, Card, Pill, Button } from "@/components/ui";
+import { Container, Button } from "@/components/ui";
 import { formatPriceKZT } from "@/lib/utils";
 import Link from "next/link";
 import { pageMeta } from "@/lib/seo";
@@ -15,122 +15,129 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
   if (!product) return notFound();
 
   return (
-    <section className="py-10 sm:py-14">
-      <Container>
-        <div className="mb-6 flex items-center justify-between gap-3">
+    // ПЕРЕКЛЮЧЕНИЕ ФОНА: bg-background вместо bg-[#050505]
+    <section className="py-24 sm:py-32 bg-background min-h-screen relative overflow-hidden transition-colors duration-300">
+      
+      {/* Фоновое свечение (Адаптированная прозрачность) */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-heat/10 blur-[120px] rounded-full pointer-events-none opacity-50 dark:opacity-30" />
+
+      <Container className="relative z-10">
+        {/* Хлебные крошки */}
+        <div className="mb-8 flex items-center justify-between gap-3">
           <Link
             href="/catalog"
-            className="text-sm font-medium text-stone-600 hover:text-ink"
+            // text-muted меняется на темный/светлый сам
+            className="text-sm font-medium text-muted hover:text-heat transition-colors flex items-center gap-2"
           >
             ← Назад в каталог
           </Link>
-          <Pill>
-            <span className="h-2 w-2 rounded-full bg-heat" />
+          <div className="inline-flex items-center gap-2 rounded-full border border-heat/20 bg-heat/10 px-3 py-1 text-xs text-heat font-bold">
+            <span className="h-1.5 w-1.5 rounded-full bg-heat shadow-[0_0_8px_#ff8c00]" />
             Гарантия {product.warrantyYears} лет
-          </Pill>
+          </div>
         </div>
 
-        <div className="grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
-          <Card className="p-7">
-            <div className="text-xs font-medium tracking-premium text-stone-500">
-              {product.series}
-            </div>
+        <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+          
+          {/* ЛЕВАЯ КОЛОНКА: Описание и Характеристики (bg-card) */}
+          <div className="rounded-3xl border border-border bg-card p-8 sm:p-10 relative overflow-hidden shadow-sm">
+             {/* Легкий блик для объема */}
+            <div className="absolute inset-0 bg-gradient-to-br from-heat/5 to-transparent pointer-events-none" />
 
-            <h1 className="mt-1 text-2xl font-semibold tracking-premium text-ink sm:text-3xl">
-              {product.name}
-            </h1>
-
-            <p className="mt-3 text-sm leading-relaxed text-stone-600">
-              {product.short} Этот блок — демо-текст в стиле премиум-брендов:
-              кратко, уверенно и по делу.
-            </p>
-
-            <div className="mt-6 grid gap-3 sm:grid-cols-2">
-              <div className="rounded-xl border border-stone-100 bg-white px-4 py-3">
-                <div className="text-xs text-stone-500">Высота</div>
-                <div className="text-base font-semibold text-ink">
-                  {product.heightMm} мм
+            <div className="relative z-10">
+                <div className="text-xs font-bold tracking-widest text-heat uppercase mb-2">
+                {product.series}
                 </div>
-              </div>
-              <div className="rounded-xl border border-stone-100 bg-white px-4 py-3">
-                <div className="text-xs text-stone-500">Количество секций</div>
-                <div className="text-base font-semibold text-ink">
-                  {product.sections}
+
+                {/* text-foreground адаптируется */}
+                <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-5xl">
+                {product.name}
+                </h1>
+
+                <p className="mt-4 text-base leading-relaxed text-muted max-w-2xl">
+                {product.short} Оптимальное инженерное решение для современного интерьера: 
+                высокая надежность и премиальная эстетика в каждой детали.
+                </p>
+
+                {/* Сетка характеристик */}
+                <div className="mt-10 grid gap-3 sm:grid-cols-2">
+                {[
+                    { label: "Высота", val: `${product.heightMm} мм` },
+                    { label: "Секций", val: product.sections },
+                    { label: "Мощность", val: `${product.powerW} Вт` },
+                    { label: "Давление", val: `${product.pressureAtm} атм` },
+                    { label: "Покрытие", val: product.finish },
+                    { label: "Подключение", val: product.connection },
+                ].map((item) => (
+                    <div key={item.label} className="rounded-xl border border-border bg-secondary/30 px-5 py-4 hover:bg-secondary/50 transition-all group">
+                        <div className="text-xs text-muted uppercase font-bold tracking-wider">{item.label}</div>
+                        <div className="text-lg font-bold text-foreground mt-1 group-hover:text-heat transition-colors">
+                            {item.val}
+                        </div>
+                    </div>
+                ))}
                 </div>
-              </div>
-              <div className="rounded-xl border border-stone-100 bg-white px-4 py-3">
-                <div className="text-xs text-stone-500">Тепловая мощность</div>
-                <div className="text-base font-semibold text-ink">
-                  {product.powerW} W
+
+                {/* Блок доверия */}
+                <div className="mt-8 rounded-2xl border border-heat/20 bg-heat/5 p-6">
+                <div className="text-sm font-bold tracking-wide text-heat uppercase mb-3">
+                    Преимущества Tengri Thermo
                 </div>
-              </div>
-              <div className="rounded-xl border border-stone-100 bg-white px-4 py-3">
-                <div className="text-xs text-stone-500">Рабочее давление</div>
-                <div className="text-base font-semibold text-ink">
-                  {product.pressureAtm} атм
+                <ul className="grid gap-3 text-sm text-foreground/80">
+                    <li className="flex gap-3">
+                        <span className="text-heat font-bold">✓</span> Контроль качества и герметичности каждой секции
+                    </li>
+                    <li className="flex gap-3">
+                        <span className="text-heat font-bold">✓</span> Стабильная теплоотдача при любых нагрузках
+                    </li>
+                    <li className="flex gap-3">
+                        <span className="text-heat font-bold">✓</span> Профессиональный расчёт под ваш объект
+                    </li>
+                </ul>
                 </div>
-              </div>
+            </div>
+          </div>
 
-              <div className="rounded-xl border border-stone-100 bg-white px-4 py-3">
-                <div className="text-xs text-stone-500">Покрытие</div>
-                <div className="text-base font-semibold text-ink">
-                  {product.finish}
+          {/* ПРАВАЯ КОЛОНКА: Цена и CTA */}
+          <div className="h-fit lg:sticky lg:top-24">
+            <div className="rounded-3xl border border-border bg-card p-8 shadow-xl relative overflow-hidden">
+                
+                <div className="text-sm font-bold tracking-wide text-muted uppercase mb-4">
+                Цена и оформление
                 </div>
-              </div>
-              <div className="rounded-xl border border-stone-100 bg-white px-4 py-3">
-                <div className="text-xs text-stone-500">Подключение</div>
-                <div className="text-base font-semibold text-ink">
-                  {product.connection}
+
+                {/* Блок цены: bg-secondary адаптируется под тему */}
+                <div className="rounded-2xl bg-secondary p-6 border border-border mb-6">
+                    <div className="text-xs text-muted mb-1 font-medium">Розничная цена</div>
+                    <div className="text-4xl font-bold tracking-tight text-foreground">
+                        {formatPriceKZT(product.priceKzt)}
+                    </div>
+                    <div className="mt-3 text-[10px] leading-relaxed text-muted uppercase tracking-tighter">
+                        Стоимость может варьироваться в зависимости от объёма заказа.
+                    </div>
                 </div>
-              </div>
-            </div>
 
-            <div className="mt-6 rounded-2xl border border-stone-100 bg-stone-50 p-5">
-              <div className="text-sm font-semibold tracking-premium text-ink">
-                Важное для доверия
-              </div>
-              <ul className="mt-3 grid gap-2 text-sm text-stone-700">
-                <li>• Контроль качества и герметичности</li>
-                <li>• Стабильная теплоотдача при эксплуатации</li>
-                <li>• Поддержка при подборе под объект</li>
-              </ul>
-            </div>
-          </Card>
+                <div className="grid gap-3">
+                    {/* Кнопки теперь в едином стиле */}
+                    <ProductCTAClient productName={product.name} />
+                    
+                    <Link href="/contacts">
+                        <Button variant="outline" className="w-full bg-transparent border-border text-foreground hover:bg-secondary py-6">
+                        Связаться с нами
+                        </Button>
+                    </Link>
+                    <Link href="/catalog">
+                        <Button variant="ghost" className="w-full text-muted hover:text-foreground">
+                        Вернуться в каталог
+                        </Button>
+                    </Link>
+                </div>
 
-          <Card className="p-7">
-            <div className="text-sm font-semibold tracking-premium text-ink">
-              Цена и заявка
+                <div className="mt-8 text-[10px] font-bold uppercase tracking-widest text-muted text-center border-t border-border pt-6">
+                Гарантия 10 лет · Сертификат CT-KZ · Доставка РК
+                </div>
             </div>
-
-            <div className="mt-4 rounded-2xl border border-stone-100 bg-white p-5">
-              <div className="text-xs text-stone-500">Цена</div>
-              <div className="mt-1 text-2xl font-semibold tracking-premium text-ink">
-                {formatPriceKZT(product.priceKzt)}
-              </div>
-              <div className="mt-2 text-xs text-stone-500">
-                Итоговая стоимость может зависеть от объёма и условий поставки.
-              </div>
-            </div>
-
-            <div className="mt-4 grid gap-2">
-              <ProductCTAClient productName={product.name} />
-              <Link href="/contacts">
-                <Button variant="outline" className="w-full">
-                  Контакты
-                </Button>
-              </Link>
-              <Link href="/catalog">
-                <Button variant="ghost" className="w-full">
-                  Вернуться в каталог
-                </Button>
-              </Link>
-            </div>
-
-            <div className="mt-4 text-xs leading-relaxed text-stone-500">
-              Микро-текст: гарантия · совместимость · консультация по подключению
-              — чтобы вы чувствовали уверенность до покупки.
-            </div>
-          </Card>
+          </div>
         </div>
       </Container>
     </section>
@@ -139,7 +146,6 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
 
 export const metadata = pageMeta({
   title: "Карточка товара",
-  description:
-    "Характеристики радиатора Tengri Thermo: мощность, высота, секции и цена. Запросите расчёт под ваш объект.",
+  description: "Технические характеристики и цены на радиаторы Tengri Thermo.",
   urlPath: "/catalog"
 });

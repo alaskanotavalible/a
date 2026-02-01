@@ -1,27 +1,14 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Providers from "./providers";
-import Header from "@/components/Header";
+import Header from "@/components/Header"; // Подключаем наш новый Header
 import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
+import ScrollProgress from "@/components/ScrollProgress";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://tengri-thermo.example"),
-  title: {
-    default: "Tengri Thermo — Биметаллические радиаторы премиум-класса",
-    template: "%s — Tengri Thermo"
-  },
-  description:
-    "Надёжные и стильные биметаллические радиаторы для квартир, домов и проектов в Казахстане. Подбор модели и расчёт мощности под ваш объект.",
-  openGraph: {
-    title: "Tengri Thermo",
-    description:
-      "Премиальные биметаллические радиаторы для Казахстана. Каталог, характеристики, расчёт и заявки.",
-    type: "website"
-  },
-  robots: {
-    index: true,
-    follow: true
-  }
+  title: "Tengri Thermo",
+  description: "Премиальные биметаллические радиаторы",
 };
 
 export default function RootLayout({
@@ -31,11 +18,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
-      <body className="min-h-screen bg-paper">
+      {/* Глобальный черный фон для всего сайта */}
+      <body className="min-h-screen bg-[#050505] text-white antialiased selection:bg-heat selection:text-white">
+        <ScrollProgress />
         <Providers>
+          
+          {/* Здесь встанет твой хедер (который мы написали выше) */}
           <Header />
-          <main className="pt-[76px]">{children}</main>
+
+          {/* Основной контент */}
+          <main>
+            {children}
+          </main>
+          
           <Footer />
+          <WhatsAppButton />
+          
         </Providers>
       </body>
     </html>

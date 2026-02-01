@@ -2,18 +2,15 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Button, Container, Pill } from "./ui";
 import { useModal } from "./ModalProvider";
-import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import ThemeToggle from "./ThemeToggle"; 
 
-const nav = [
+const navLinks = [
   { href: "/", label: "Главная" },
   { href: "/catalog", label: "Каталог" },
-  { href: "/about", label: "О компании" },
-  { href: "/suppliers", label: "Поставщики" },
-  { href: "/where-to-buy", label: "Где купить" },
-  { href: "/dealers", label: "Партнёрам" },
+  { href: "/about", label: "О нас" },
+  { href: "/dealers", label: "Дилерам" },
   { href: "/contacts", label: "Контакты" }
 ];
 
@@ -22,92 +19,79 @@ export default function Header() {
   const { open } = useModal();
 
   return (
-    <header className="fixed top-0 z-50 w-full border-b border-stone-100 bg-white/80 backdrop-blur-xl">
-      <Container className="flex h-[76px] items-center justify-between gap-4">
-        <Link href="/" className="group flex items-center gap-3">
-          <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-ink text-white shadow-soft">
-            <span className="text-sm font-semibold tracking-premium">TT</span>
-            <span className="absolute -bottom-1 -right-1 h-2.5 w-2.5 rounded-full bg-heat" />
-          </div>
-          <div className="leading-tight">
-            <div className="text-sm font-semibold tracking-premium text-ink">
-              Tengri Thermo
+    // pointer-events-none на всем хедере, чтобы пропускал клики по бокам
+    <header className="fixed top-0 z-50 w-full pt-4 sm:pt-6 px-4 flex justify-center pointer-events-none">
+      
+      {/* pointer-events-auto на самой "таблетке", чтобы меню работало */}
+      <div className="w-full max-w-7xl pointer-events-auto rounded-full border border-border bg-header backdrop-blur-md shadow-lg transition-all duration-300">
+        <div className="h-[72px] px-6 sm:px-8 flex items-center justify-between">
+          
+          {/* ЛОГОТИП */}
+          <Link href="/" className="flex items-center gap-4 group">
+            <div className="relative h-10 w-10 overflow-hidden rounded-full border border-border group-hover:border-heat transition-colors">
+              <img 
+                src="/logo.jpeg" 
+                alt="Logo" 
+                className="h-full w-full object-cover" 
+              />
             </div>
-            <div className="text-xs text-stone-500">
-              Биметаллические радиаторы
+            
+            <div className="text-xl font-bold tracking-widest text-foreground uppercase group-hover:text-heat transition-colors leading-none">
+              Tengri<span className="text-heat">Thermo</span>
             </div>
-          </div>
-        </Link>
+          </Link>
 
-        <nav className="hidden items-center gap-1 lg:flex">
-          {nav.map((item) => {
-            const active =
-              pathname === item.href ||
-              (item.href !== "/" && pathname.startsWith(item.href));
+          {/* МЕНЮ */}
+          <nav className="hidden lg:block">
+            <ul className="flex items-center gap-2">
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className={cn(
+                        "px-4 py-2.5 rounded-full text-sm font-medium transition-all uppercase tracking-wide",
+                        isActive
+                          ? "bg-secondary text-foreground font-bold" 
+                          : "text-muted hover:text-foreground hover:bg-secondary/50"
+                      )}
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
 
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  "rounded-xl px-3 py-2 text-sm transition",
-                  active
-                    ? "bg-stone-100 text-ink"
-                    : "text-stone-600 hover:bg-stone-50 hover:text-ink"
-                )}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
-        </nav>
+          {/* ПРАВАЯ ЧАСТЬ */}
+          <div className="flex items-center gap-4">
+            
+            {/* КНОПКА ТЕМЫ (ВАЖНО: cursor-pointer и z-index) */}
+            <div className="relative z-50 cursor-pointer hover:scale-110 transition-transform">
+               <ThemeToggle />
+            </div>
 
-        <div className="flex items-center gap-2">
-          <Pill className="hidden sm:inline-flex">
-            <span className="h-2 w-2 rounded-full bg-heat" />
-            Гарантия 10 лет · Контроль качества
-          </Pill>
-
-          <motion.div
-            className="hidden md:block"
-            initial={{ opacity: 0, y: -4 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.25 }}
-          >
-            <Button
-              variant="outline"
-              onClick={() => open("price")}
-              className="hidden lg:inline-flex"
+            {/* Телефон */}
+            <a 
+              href="tel:+77172677711" 
+              className="hidden xl:flex items-center gap-2 text-foreground hover:text-heat transition-colors font-medium"
             >
-              Скачать прайс
-            </Button>
-          </motion.div>
-
-          <Button
-            variant="dark"
-            onClick={() => open("call")}
-            className="whitespace-nowrap"
-          >
-            Позвонить
-          </Button>
-        </div>
-      </Container>
-
-      {/* Mobile nav */}
-      <div className="lg:hidden">
-        <Container className="pb-3">
-          <div className="flex flex-wrap gap-2">
-            {nav.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="rounded-xl border border-stone-200 bg-white px-3 py-2 text-xs text-stone-700 transition hover:bg-stone-50"
-              >
-                {item.label}
-              </Link>
-            ))}
+              <span className="text-lg leading-none">📞</span> 
+              <span className="text-sm font-bold">+7 (7172) 677 711</span>
+            </a>
+            
+            {/* Кнопка "Заказать" */}
+            <button 
+              onClick={() => open("request")}
+              className="bg-heat hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-full text-sm shadow-md transition-transform hover:scale-105 active:scale-95"
+            >
+              Заказать расчет
+            </button>
           </div>
-        </Container>
+
+        </div>
       </div>
     </header>
   );
