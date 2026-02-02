@@ -3,7 +3,7 @@
 export default function WhatsAppButton() {
   return (
     <a
-      href="https://wa.me/77172677711" // <-- Проверь номер, чтобы был без + и скобок (например 7717...)
+      href="https://wa.me/7761346303" // <-- Проверь номер, чтобы был без + и скобок (например 7717...)
       target="_blank"
       rel="noopener noreferrer"
       className="fixed bottom-6 right-6 z-50 group"

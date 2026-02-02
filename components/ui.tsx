@@ -1,111 +1,125 @@
 "use client";
 
+import * as React from "react";
+import { Slot } from "@radix-ui/react-slot";
+import { cva, type VariantProps } from "class-variance-authority";
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
 
-export function Container({
+// === УТИЛИТА CN ===
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+// === BUTTON (КНОПКА) ===
+const buttonVariants = cva(
+  "inline-flex items-center justify-center whitespace-nowrap rounded-xl text-sm font-bold tracking-wide transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  {
+    variants: {
+      variant: {
+        default: "bg-[#ff8c00] text-white hover:bg-[#e07b00] hover:shadow-lg shadow-orange-500/20 border-0",
+        primary: "bg-[#ff8c00] text-white hover:bg-[#e07b00] hover:shadow-lg shadow-orange-500/20 border-0",
+        outline: "border border-input bg-transparent hover:bg-accent hover:text-accent-foreground text-foreground",
+        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        ghost: "hover:bg-accent hover:text-accent-foreground text-foreground",
+        dark: "bg-foreground text-background hover:bg-foreground/90",
+        hero: "border border-white/30 bg-white/10 text-white backdrop-blur-md hover:bg-white hover:text-black"
+      },
+      size: {
+        default: "h-12 px-6 py-3",
+        sm: "h-10 rounded-lg px-4",
+        lg: "h-14 rounded-xl px-10 text-base",
+        icon: "h-10 w-10",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  }
+);
+
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  asChild?: boolean;
+}
+
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, asChild = false, ...props }, ref) => {
+    const Comp = (asChild ? Slot : motion.button) as any;
+    return (
+      <Comp
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        {...props}
+      />
+    );
+  }
+);
+Button.displayName = "Button";
+
+// === CONTAINER ===
+const Container = ({
+  className,
   children,
-  className
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => {
   return (
-    <div className={cn("mx-auto w-full max-w-6xl px-4 sm:px-6", className)}>
+    <div
+      className={cn("mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8", className)}
+      {...props}
+    >
       {children}
     </div>
   );
-}
+};
 
-export function Button({
-  children,
+// === CARD (Вернули компонент) ===
+const Card = ({
   className,
-  variant = "primary",
-  onClick,
-  type
-}: {
-  children: React.ReactNode;
-  className?: string;
-  variant?: "primary" | "ghost" | "outline" | "dark";
-  onClick?: () => void;
-  type?: "button" | "submit";
-}) {
-  const base =
-    "inline-flex items-center justify-center rounded-xl px-4 py-2.5 text-sm font-medium tracking-premium transition-all focus:outline-none focus:ring-2 focus:ring-heat/40";
-  const styles = {
-    primary:
-      "bg-ink text-white hover:bg-ink/95 hover:shadow-soft active:translate-y-[1px]",
-    dark:
-      "bg-ink text-white hover:bg-ink/95 hover:shadow-soft active:translate-y-[1px]",
-    ghost:
-      "bg-transparent text-ink hover:bg-stone-100 active:translate-y-[1px]",
-    outline:
-      "border border-stone-200 bg-white text-ink hover:bg-stone-50 active:translate-y-[1px]"
-  };
-
+  children,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => {
   return (
-    <motion.button
-      type={type ?? "button"}
-      onClick={onClick}
-      whileHover={{ scale: 1.01 }}
-      whileTap={{ scale: 0.99 }}
-      className={cn(base, styles[variant], className)}
+    <div
+      className={cn(
+        "rounded-3xl border border-border bg-card text-card-foreground shadow-sm",
+        className
+      )}
+      {...props}
     >
       {children}
-    </motion.button>
+    </div>
   );
-}
+};
 
-export function Pill({
+// === PILL (Вернули компонент) ===
+const Pill = ({
+  className,
   children,
-  className
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
+  ...props
+}: React.HTMLAttributes<HTMLSpanElement>) => {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-2 rounded-full border border-stone-200 bg-white px-3 py-1 text-xs text-stone-700",
+        "inline-flex items-center gap-2 rounded-full border border-border bg-secondary px-3 py-1 text-xs font-medium text-muted-foreground",
         className
       )}
+      {...props}
     >
       {children}
     </span>
   );
-}
+};
 
-export function Divider({ className }: { className?: string }) {
-  return <div className={cn("h-px w-full bg-stone-100", className)} />;
-}
+// === DIVIDER (Вернули компонент) ===
+const Divider = ({ className }: { className?: string }) => {
+  return <div className={cn("h-px w-full bg-border", className)} />;
+};
 
-export function Card({
-  children,
-  className
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
-  return (
-    <div
-      className={cn(
-        "rounded-2xl border border-stone-100 bg-white shadow-premium",
-        className
-      )}
-    >
-      {children}
-    </div>
-  );
-}
-
-export function SubtleGlow() {
-  return (
-    <div
-      aria-hidden
-      className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
-    >
-      <div className="absolute -top-40 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-heat/12 blur-3xl" />
-      <div className="absolute -bottom-48 right-[-120px] h-[420px] w-[420px] rounded-full bg-ink/6 blur-3xl" />
-    </div>
-  );
-}
+// Экспортируем всё вместе
+export { Button, buttonVariants, Container, Card, Pill, Divider };

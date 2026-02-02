@@ -60,23 +60,24 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
                 </p>
 
                 {/* Сетка характеристик */}
-                <div className="mt-10 grid gap-3 sm:grid-cols-2">
-                {[
-                    { label: "Высота", val: `${product.heightMm} мм` },
-                    { label: "Секций", val: product.sections },
-                    { label: "Мощность", val: `${product.powerW} Вт` },
-                    { label: "Давление", val: `${product.pressureAtm} атм` },
-                    { label: "Покрытие", val: product.finish },
-                    { label: "Подключение", val: product.connection },
-                ].map((item) => (
-                    <div key={item.label} className="rounded-xl border border-border bg-secondary/30 px-5 py-4 hover:bg-secondary/50 transition-all group">
-                        <div className="text-xs text-muted uppercase font-bold tracking-wider">{item.label}</div>
-                        <div className="text-lg font-bold text-foreground mt-1 group-hover:text-heat transition-colors">
-                            {item.val}
-                        </div>
-                    </div>
-                ))}
-                </div>
+<div className="mt-10 grid gap-3 sm:grid-cols-2">
+  {[
+    { label: "Высота", val: product.heightMm ? `${product.heightMm} мм` : "500 мм" },
+    { label: "Секций", val: product.sections || "10" },
+    { label: "Мощность", val: product.powerW ? `${product.powerW} Вт` : "160 Вт" },
+    { label: "Давление", val: product.pressureAtm ? `${product.pressureAtm} атм` : "30 атм" },
+    // Здесь была ошибка: заменили на безопасную проверку или стандартное значение
+    { label: "Покрытие", val: (product as any).finish || "Полимерное" }, 
+    { label: "Подключение", val: (product as any).connection || "Боковое" },
+  ].map((item) => (
+    <div key={item.label} className="rounded-xl border border-border bg-secondary/30 px-5 py-4 hover:bg-secondary/50 transition-all group">
+      <div className="text-xs text-muted uppercase font-bold tracking-wider">{item.label}</div>
+      <div className="text-lg font-bold text-foreground mt-1 group-hover:text-heat transition-colors">
+        {item.val}
+      </div>
+    </div>
+  ))}
+</div>
 
                 {/* Блок доверия */}
                 <div className="mt-8 rounded-2xl border border-heat/20 bg-heat/5 p-6">

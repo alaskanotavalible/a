@@ -79,7 +79,7 @@ export default function Header() {
               className="hidden xl:flex items-center gap-2 text-foreground hover:text-heat transition-colors font-medium"
             >
               <span className="text-lg leading-none">📞</span> 
-              <span className="text-sm font-bold">+7 (7172) 677 711</span>
+              <span className="text-sm font-bold">+7 (776) 134 63 03</span>
             </a>
             
             {/* Кнопка "Заказать" */}

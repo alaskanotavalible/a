@@ -1,104 +1,85 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { products } from "@/data/products";
-import { Container, Button } from "@/components/ui";
+import { useState, useMemo } from "react";
+import { Container } from "@/components/ui";
 import ProductCard from "@/components/ProductCard";
-import Filters, { defaultFilters, FilterState } from "@/components/Filters";
+import Filters from "@/components/Filters";
+import { products } from "@/data/products"; // Твой новый файл с данными
 
 export default function CatalogClient() {
-  // Инициализация фильтров с учетом максимальной цены из данных
-  const [filters, setFilters] = useState<FilterState>({
-    ...defaultFilters,
-    maxPrice: Math.max(...products.map((p) => p.priceKzt)),
-  });
+  // Состояния фильтров
+  const [height, setHeight] = useState<number | null>(null);
+  const [depth, setDepth] = useState<number | null>(null);
+  const [color, setColor] = useState<string | null>(null);
 
   // Логика фильтрации
-  const filtered = useMemo(() => {
+  const filteredProducts = useMemo(() => {
     return products.filter((p) => {
-      if (filters.heightMm !== "all" && p.heightMm !== filters.heightMm)
-        return false;
-      if (filters.sections !== "all" && p.sections !== filters.sections)
-        return false;
-      if (p.powerW < filters.minPower) return false;
-      if (p.priceKzt > filters.maxPrice) return false;
-      if (filters.inStockOnly && !p.inStock) return false;
+      // 1. Фильтр по высоте
+      if (height && p.heightMm !== height) return false;
+      
+      // 2. Фильтр по глубине (межосевое)
+      if (depth && p.depthMm !== depth) return false;
+
+      // 3. Фильтр по цвету
+      // @ts-ignore
+      if (color && p.colors && !p.colors.includes(color)) return false;
+
       return true;
     });
-  }, [filters]);
+  }, [height, depth, color]);
 
+  // Сброс всех фильтров
   const resetFilters = () => {
-    setFilters({
-      ...defaultFilters,
-      maxPrice: Math.max(...products.map((p) => p.priceKzt)),
-    });
+    setHeight(null);
+    setDepth(null);
+    setColor(null);
   };
 
   return (
-    // bg-background — основа для смены тем
-    <section className="py-20 bg-background min-h-screen relative overflow-hidden transition-colors duration-300">
-      
-      {/* Фоновые эффекты (адаптированы) */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-heat/10 blur-[120px] rounded-full pointer-events-none opacity-40 dark:opacity-60" />
-
-      <Container className="relative z-10">
-        <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between mb-10 pt-10">
+    <section className="py-12 bg-background min-h-screen">
+      <Container>
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-10">
           
-          <div>
-             <div className="text-heat text-xs font-bold uppercase tracking-widest mb-2">Каталог</div>
-             <h1 className="text-4xl font-bold text-foreground">Биметаллические радиаторы</h1>
-             <p className="text-muted mt-2 max-w-xl">Подберите высоту, мощность и количество секций под ваш объект.</p>
-          </div>
-
-          <div className="flex gap-2">
-            <Button
-              variant="outline"
-              className="bg-transparent border-border text-foreground hover:bg-secondary"
-              onClick={resetFilters}
-            >
-              Сбросить фильтры
-            </Button>
-          </div>
-        </div>
-
-        <div className="mt-8 grid gap-8 lg:grid-cols-[320px_1fr]">
-          {/* Колонка фильтров (Sticky) */}
-          <div className="lg:sticky lg:top-[100px] lg:h-fit">
-            {/* ВАЖНО: Убедись, что внутри компонента Filters 
-                используются классы bg-card, text-foreground и border-border 
-            */}
-            <Filters products={products} value={filters} onChange={setFilters} />
-          </div>
+          {/* Сайдбар с фильтрами */}
+          <aside className="lg:col-span-1">
+            <div className="sticky top-24">
+              <Filters
+                selectedHeight={height}
+                onHeightChange={setHeight}
+                selectedDepth={depth}
+                onDepthChange={setDepth}
+                selectedColor={color}
+                onColorChange={setColor}
+                onReset={resetFilters}
+                totalCount={filteredProducts.length}
+              />
+            </div>
+          </aside>
 
           {/* Сетка товаров */}
-          <div>
-            <div className="mb-6 text-sm text-muted">
-              Найдено моделей: <span className="font-bold text-foreground ml-1">{filtered.length}</span>
-            </div>
-
-            {filtered.length === 0 ? (
-              <div className="rounded-2xl border border-border bg-card p-10 text-center shadow-sm">
-                <div className="text-xl font-bold text-foreground mb-2">
-                  Ничего не найдено
-                </div>
-                <div className="text-sm text-muted mb-6">
-                  Попробуйте изменить параметры фильтрации.
-                </div>
-                 <Button 
-                   onClick={resetFilters}
-                   className="!bg-heat !text-white border-0 font-bold"
-                 >
-                    Очистить фильтры
-                 </Button>
+          <div className="lg:col-span-3">
+            {filteredProducts.length > 0 ? (
+              <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+                {filteredProducts.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
               </div>
             ) : (
-              <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-                {filtered.map((p) => (
-                  <ProductCard key={p.id} product={p} />
-                ))}
+              <div className="flex flex-col items-center justify-center py-20 text-center rounded-3xl border border-dashed border-border bg-card/30">
+                <div className="text-4xl mb-4">🔍</div>
+                <h3 className="text-xl font-bold text-foreground">Ничего не найдено</h3>
+                <p className="text-muted mt-2">Попробуйте сбросить фильтры.</p>
+                <button 
+                  onClick={resetFilters}
+                  className="mt-6 px-6 py-2 bg-heat text-white rounded-lg font-bold hover:bg-orange-600 transition"
+                >
+                  Сбросить фильтры
+                </button>
               </div>
             )}
           </div>
+          
         </div>
       </Container>
     </section>

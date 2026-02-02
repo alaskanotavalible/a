@@ -19,122 +19,92 @@ export default function HomePage() {
 
   return (
     <>
-      {/* HERO SECTION */}
-      {/* Используем bg-background, чтобы менялся цвет */}
-      <section className="relative overflow-hidden border-b border-border bg-background pt-32 pb-16 sm:pt-40 sm:pb-24 transition-colors duration-300">
+      {/* === VIDEO HERO SECTION === */}
+      <section className="relative h-screen min-h-[600px] w-full overflow-hidden flex items-center justify-center bg-black">
         
-        {/* Фоновые эффекты (адаптированы под обе темы) */}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-heat/20 blur-[120px] rounded-full pointer-events-none opacity-20 dark:opacity-40 mix-blend-screen" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-500/10 blur-[100px] rounded-full pointer-events-none" />
+        {/* Видео-фон */}
+        <div className="absolute inset-0 z-0">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="h-full w-full object-cover opacity-60" // opacity-60 затемняет видео на 40% для читаемости текста
+            poster="/hero-poster.jpg" // Заглушка (картинка), пока видео грузится
+          >
+            {/* Файл hero.mp4 должен лежать в папке public */}
+            <source src="/hero.mp4" type="video/mp4" />
+          </video>
+          
+          {/* Градиент снизу для плавного перехода в контент */}
+          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
+        </div>
 
-        <Container>
-          <div className="grid gap-12 md:grid-cols-2 md:items-center">
+        {/* Контент поверх видео */}
+        <Container className="relative z-10 h-full flex flex-col justify-center">
+          <div className="max-w-4xl space-y-8 animate-in fade-in slide-in-from-bottom-10 duration-1000">
             
-            {/* ЛЕВАЯ ЧАСТЬ */}
-            <div className="relative z-10">
-              <div className="inline-flex items-center gap-2 mb-6 rounded-full border border-border bg-secondary/30 px-4 py-1.5 text-muted backdrop-blur-sm text-sm font-medium">
-                <span className="h-2 w-2 rounded-full bg-heat animate-pulse shadow-[0_0_10px_#ff8c00]" />
-                Надёжность · Стиль · Казахстан
-              </div>
-
-              <h1 className="text-4xl font-extrabold tracking-tight text-foreground sm:text-6xl leading-[1.1]">
-                Tengri Thermo — <br/>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-heat to-orange-400">
-                   премиальный
-                </span> биметалл
-              </h1>
-
-              <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">
-                Радиаторы, которые выглядят дорого и работают стабильно: в квартирах, домах и проектах. 
-                Лаконичный дизайн, уверенная теплоотдача, чистая инженерия.
-              </p>
-
-              <div className="mt-8 flex flex-wrap gap-4">
-                <Link href="/catalog">
-                  <Button className="w-full sm:w-auto !bg-heat hover:!bg-orange-600 !text-white border-0 px-8 py-4 text-base shadow-lg hover:scale-105 transition-transform">
-                    Открыть каталог
-                  </Button>
-                </Link>
-                <Link href="/about">
-                  <Button variant="outline" className="w-full sm:w-auto bg-transparent border-border text-foreground hover:bg-secondary px-8 py-4 text-base backdrop-blur-md">
-                    Почему мы?
-                  </Button>
-                </Link>
-              </div>
-
-              {/* Плашки характеристик */}
-              <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3">
-                {[
-                  { label: "Давление", val: "25 атм" },
-                  { label: "Гарантия", val: "10 лет" },
-                  { label: "Подбор", val: "под объект" },
-                ].map((item) => (
-                  <div key={item.label} className="rounded-2xl border border-border bg-card/50 px-5 py-4 backdrop-blur-sm transition hover:bg-secondary hover:border-border">
-                    <div className="text-xs text-muted font-bold uppercase tracking-wider mb-1">{item.label}</div>
-                    <div className="text-lg font-bold text-foreground">{item.val}</div>
-                  </div>
-                ))}
-              </div>
+            {/* Бейдж "Казахстан" */}
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-white backdrop-blur-md text-sm font-medium">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
+                </span>
+                Производство в Казахстане
             </div>
 
-            {/* ПРАВАЯ ЧАСТЬ (КАРТОЧКА) */}
-            <div className="relative group perspective-1000">
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-heat to-orange-600 rounded-[24px] blur opacity-20 group-hover:opacity-50 transition duration-1000" />
+            {/* Заголовок (Белый, так как на темном видео) */}
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white leading-[1.1] tracking-tight drop-shadow-2xl">
+              Tengri Thermo — <br/>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">
+                 премиальный
+              </span> биметалл
+            </h1>
+            
+            <p className="text-lg md:text-2xl text-gray-100 max-w-2xl leading-relaxed drop-shadow-md">
+              Радиаторы, которые выглядят дорого и работают стабильно. 
+              Лаконичный дизайн, уверенная теплоотдача, чистая инженерия.
+            </p>
 
-              <div className="relative rounded-[24px] overflow-hidden h-full transform transition-transform duration-500 hover:scale-[1.02] border border-border bg-card shadow-2xl">
-                <div className="relative p-8 sm:p-10">
-                  {/* Градиент внутри */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-heat/5 via-transparent to-transparent opacity-50" />
-                  
-                  <div className="relative z-10">
-                    <div className="text-xs font-bold tracking-widest text-heat uppercase mb-2">
-                      Флагманская серия
-                    </div>
-                    
-                    <div className="text-3xl font-bold text-foreground tracking-tight">
-                      TT Bimetal
-                    </div>
-                    
-                    <p className="mt-4 text-sm leading-relaxed text-muted">
-                      Комфортный баланс материалов и дизайна — для города, дома и больших проектов.
-                    </p>
+            {/* Кнопки */}
+            <div className="flex flex-col sm:flex-row gap-4 pt-6">
+              <Link href="/catalog">
+                {/* Кнопка "Открыть каталог" - Ярко-оранжевая */}
+                <Button className="w-full sm:w-auto bg-[#ff8c00] hover:bg-[#e07b00] text-white border-0 px-8 py-4 text-lg shadow-[0_0_20px_rgba(255,140,0,0.4)] transition-transform hover:scale-105">
+                  Открыть каталог
+                </Button>
+              </Link>
+              <Link href="/about">
+                {/* Кнопка "Почему мы?" - Прозрачная белая (стекло) */}
+                <Button variant="outline" className="w-full sm:w-auto border-white/40 text-white bg-white/5 hover:bg-white hover:text-black px-8 py-4 text-lg backdrop-blur-sm transition-colors">
+                  Почему мы?
+                </Button>
+              </Link>
+            </div>
 
-                    <div className="mt-6 grid gap-2">
-                      {[
-                        "Чистая геометрия и аккуратные торцы",
-                        "Уверенная теплоотдача без переплат",
-                        "Монтаж под интерьер: боковое / нижнее",
-                        "Стабильность в условиях Казахстана"
-                      ].map((t) => (
-                        <div
-                          key={t}
-                          className="rounded-xl border border-border bg-secondary/40 px-4 py-3 text-sm text-foreground backdrop-blur-sm transition hover:bg-secondary"
-                        >
-                           <span className="text-heat mr-2">✓</span> {t}
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                      <Link href="/catalog" className="w-full sm:w-auto">
-                        {/* Кнопка "Выбрать модель" - контрастная к фону */}
-                        <Button className="w-full sm:w-auto bg-foreground text-background hover:bg-foreground/90 font-bold border-0">
-                          Выбрать модель
-                        </Button>
-                      </Link>
-                      <Link href="/dealers" className="w-full sm:w-auto">
-                        <Button variant="outline" className="w-full sm:w-auto bg-transparent border-border text-foreground hover:bg-secondary">
-                          Для партнёров
-                        </Button>
-                      </Link>
-                    </div>
+            {/* Характеристики (Плашки поверх видео) */}
+            <div className="mt-12 grid grid-cols-2 md:grid-cols-3 gap-4 max-w-2xl">
+                {[
+                  { label: "Давление", val: "30 атм" },
+                  { label: "Гарантия", val: "10 лет" },
+                  { label: "Секций", val: "6–14 шт" },
+                ].map((item) => (
+                  <div key={item.label} className="rounded-xl border border-white/10 bg-black/40 px-5 py-3 backdrop-blur-md">
+                    <div className="text-xs text-white/60 font-bold uppercase tracking-wider mb-1">{item.label}</div>
+                    <div className="text-xl font-bold text-white">{item.val}</div>
                   </div>
-                </div>
-              </div>
+                ))}
             </div>
 
           </div>
         </Container>
+
+        {/* Иконка прокрутки вниз */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce z-10 text-white/50">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+          </svg>
+        </div>
       </section>
 
       {/* FEATURED */}
@@ -147,7 +117,7 @@ export default function HomePage() {
                <span className="text-heat font-bold uppercase tracking-widest text-xs mb-2 block">Каталог</span>
                <h2 className="text-3xl md:text-4xl font-bold text-foreground">Популярные модели</h2>
                <p className="mt-4 text-muted max-w-xl text-sm leading-relaxed">
-                  Демо-линейка: высота 350/500/700, секции 6–14. 
+                  Демо-линейка: высота 350/500, секции 6–14. 
                   Идеальная геометрия и максимальная теплоотдача.
                </p>
             </div>
