@@ -6,6 +6,7 @@ import ProductCard from "@/components/ProductCard";
 import { pageMeta } from "@/lib/seo";
 import Certificates from "@/components/Certificates";
 import Calculator from "@/components/Calc";
+import HomeHero from "@/components/HomeHero";
 
 export const metadata = pageMeta({
   title: "Главная",
@@ -106,6 +107,8 @@ export default function HomePage() {
           </svg>
         </div>
       </section>
+
+      <HomeHero />
 
       {/* FEATURED */}
       <section className="py-20 bg-background relative border-b border-border transition-colors duration-300">

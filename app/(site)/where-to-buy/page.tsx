@@ -3,8 +3,9 @@
 import { useState } from "react";
 import { Container, Button } from "@/components/ui";
 import CTASection from "@/components/CTASection";
-import { MapPin, Phone, Clock, Navigation } from "lucide-react";
+import { MapPin, Phone, Clock, Navigation, Globe } from "lucide-react";
 
+// === ДАННЫЕ МАГАЗИНОВ (С Реальными ссылками) ===
 const locations = [
   {
     city: "Павлодар",
@@ -13,16 +14,26 @@ const locations = [
       {
         name: "ЗАВОД Triumph Thermo (Фирма СНН)",
         address: "Северная промзона, 16/3",
-        phone: "+7 (776) 134-63-03",
+        phone: "+7 (7182) 77-01-01",
         time: "Пн-Пт: 08:00 - 17:00",
-        coord: "https://2gis.kz/pavlodar/firm/70000001023982363"
+        type: "map",
+        link: "https://go.2gis.com/pavlodar/firm/70000001023982363" 
       },
       {
-        name: "Магазин «12 месяцев»",
+        name: "Интернет-магазин IMPERIAL",
+        address: "ул. Астана, 16",
+        phone: "+7 (705) 707-15-55",
+        time: "Ежедневно: 09:00 - 19:00",
+        type: "site",
+        link: "https://imperial-online.kz/"
+      },
+      {
+        name: "Гипермаркет «12 Месяцев»",
         address: "ул. Жаяу Мусы, 6",
-        phone: "+7 (7182) 60‒00‒67",
-        time: "Ежедневно: 9:00 - 20:00",
-        coord: "https://go.2gis.com/Fhrm1"
+        phone: "+7 (7182) 60-00-67",
+        time: "Ежедневно: 09:00 - 20:00",
+        type: "map",
+        link: "https://go.2gis.com/pavlodar/firm/70000001018889152"
       }
     ]
   },
@@ -30,22 +41,80 @@ const locations = [
     city: "Астана",
     shops: [
       {
-        name: "«12 Месяцев»",
-        address: "шоссе Алаш, 20а",
-        phone: "+7 (7172) 677‒711",
+        name: "EVATHERM",
+        address: "ул. Бактыораза Бейсекбаева, 18Б",
+        phone: "+7 (700) 794-85-95",
+        time: "Пн-Пт: 09:00 - 18:00",
+        type: "site",
+        link: "https://www.evatherm.kz/"
+      },
+      {
+        name: "Nurai Invest",
+        address: "ул. Бактыораза Бейсекбаева, 18А",
+        phone: "+7 (777) 563-22-33",
+        time: "Пн-Сб: 09:00 - 18:00",
+        type: "site",
+        link: "https://nurai-invest.kz/"
+      },
+      {
+        name: "Гипермаркет «12 Месяцев»",
+        address: "шоссе Алаш, 20А",
+        phone: "+7 (7172) 67-77-11",
         time: "Ежедневно: 09:00 - 21:00",
-        coord: "https://go.2gis.com/TfUVy"
+        type: "map",
+        link: "https://go.2gis.com/astana/firm/70000001018134207"
       }
     ]
   },
+  {
+    city: "Караганда",
+    shops: [
+      {
+        name: "Гипермаркет «12 Месяцев»",
+        address: "пр. Строителей, 37/2",
+        phone: "+7 (7212) 40-31-06",
+        time: "Ежедневно: 10:00 - 20:00",
+        type: "map",
+        link: "https://go.2gis.com/karaganda/firm/11822477302826771"
+      }
+    ]
+  },
+  {
+    city: "Актобе",
+    shops: [
+      {
+        name: "Nurai Invest",
+        address: "ул. Некрасова, 125",
+        phone: "+7 (777) 185-33-33",
+        time: "Пн-Сб: 09:00 - 18:00",
+        type: "site",
+        link: "https://nurai-invest.kz/"
+      }
+    ]
+  },
+  {
+    city: "Алматы",
+    shops: [
+      {
+        name: "Гипермаркет «12 Месяцев»",
+        address: "пр. Райымбека, 516",
+        phone: "+7 (727) 313-18-20",
+        time: "Ежедневно: 09:00 - 21:00",
+        type: "map",
+        link: "https://go.2gis.com/almaty/firm/9429940000788667"
+      }
+    ]
+  }
 ];
 
 export default function WhereToBuyPage() {
   const [activeCity, setActiveCity] = useState("Павлодар");
   const currentCityData = locations.find((l) => l.city === activeCity);
 
+  // Ссылка для большой карты (берем ссылку первого магазина в списке)
+  const mainMapLink = currentCityData?.shops[0]?.link || "#";
+
   return (
-    // ГЛАВНЫЙ ФОН: Белый (день) / Черный (ночь)
     <div className="bg-white dark:bg-black min-h-screen transition-colors duration-300">
       
       {/* HEADER */}
@@ -54,11 +123,9 @@ export default function WhereToBuyPage() {
           <span className="text-[#ff8c00] font-bold uppercase tracking-widest text-xs mb-2 block">
             Дилерская сеть
           </span>
-          {/* ЗАГОЛОВОК: Темно-серый (день) / Белый (ночь) */}
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
             Где купить Triumph Thermo
           </h1>
-          {/* ОПИСАНИЕ: Серый (день) / Светло-серый (ночь) */}
           <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl">
             Найдите ближайший магазин или официального дилера в вашем городе. 
             Мы постоянно расширяем географию присутствия.
@@ -112,14 +179,13 @@ export default function WhereToBuyPage() {
             {currentCityData?.shops.map((shop, i) => (
               <div 
                 key={i} 
-                // КАРТОЧКА: Белая (день) / Темная (ночь)
                 className="group p-6 sm:p-8 rounded-3xl border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:border-[#ff8c00]/30 hover:shadow-lg transition-all"
               >
                 <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
                   
                   <div className="space-y-4">
                     <div>
-                      {/* Название магазина: АДАПТИВНОЕ */}
+                      {/* Название */}
                       <div className="flex items-center gap-3 mb-1">
                         <h3 className="text-xl font-bold text-gray-900 dark:text-white">{shop.name}</h3>
                         {currentCityData.isFactory && i === 0 && (
@@ -129,7 +195,7 @@ export default function WhereToBuyPage() {
                         )}
                       </div>
                       
-                      {/* Адрес: АДАПТИВНЫЙ + оранжевая иконка */}
+                      {/* Адрес */}
                       <div className="flex items-start gap-2 text-gray-600 dark:text-gray-300 text-lg">
                         <MapPin className="w-5 h-5 text-[#ff8c00] shrink-0 mt-1" />
                         <span>{shop.address}</span>
@@ -140,9 +206,9 @@ export default function WhereToBuyPage() {
                        {/* Телефон */}
                        <div className="flex items-center gap-2">
                           <Phone className="w-4 h-4 text-gray-400" />
-                          <a href={`tel:${shop.phone}`} className="font-medium text-gray-900 dark:text-white hover:text-[#ff8c00] transition-colors">
+                          <span className="font-medium text-gray-900 dark:text-white">
                             {shop.phone}
-                          </a>
+                          </span>
                        </div>
                        {/* Время работы */}
                        <div className="flex items-center gap-2">
@@ -152,12 +218,12 @@ export default function WhereToBuyPage() {
                     </div>
                   </div>
 
-                  {/* Кнопка "Маршрут" */}
+                  {/* Кнопка действия */}
                   <div className="shrink-0">
-                     <a href={shop.coord} target="_blank" rel="noreferrer">
+                     <a href={shop.link} target="_blank" rel="noreferrer">
                        <Button variant="secondary" className="w-full md:w-auto gap-2 bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 dark:hover:bg-zinc-700 text-gray-900 dark:text-white border border-gray-200 dark:border-zinc-700 shadow-sm">
-                          <Navigation className="w-4 h-4" />
-                          Маршрут
+                          {shop.type === 'site' ? <Globe className="w-4 h-4 text-[#ff8c00]" /> : <Navigation className="w-4 h-4 text-[#ff8c00]" />}
+                          {shop.type === 'site' ? "Перейти на сайт" : "Маршрут"}
                        </Button>
                      </a>
                   </div>
@@ -166,24 +232,27 @@ export default function WhereToBuyPage() {
               </div>
             ))}
 
-            {/* Заглушка, если список пуст */}
             {(!currentCityData?.shops || currentCityData.shops.length === 0) && (
                <div className="p-12 text-center border border-dashed border-gray-200 dark:border-zinc-800 rounded-3xl">
                   <p className="text-gray-500 dark:text-gray-400">В этом городе пока нет официальных точек продаж.</p>
                </div>
             )}
             
-            {/* КАРТА ЗАГЛУШКА */}
-            <div className="mt-8 rounded-3xl overflow-hidden border border-gray-200 dark:border-zinc-800 bg-gray-100 dark:bg-zinc-900 h-[300px] relative flex items-center justify-center group cursor-pointer">
-               {/* Здесь должен быть iframe 2GIS или Yandex */}
+            {/* КАРТА (Теперь кликабельная и ведет на карту первого магазина) */}
+            <a 
+               href={mainMapLink} 
+               target="_blank" 
+               rel="noreferrer"
+               className="block mt-8 rounded-3xl overflow-hidden border border-gray-200 dark:border-zinc-800 bg-gray-100 dark:bg-zinc-900 h-[300px] relative flex items-center justify-center group cursor-pointer"
+            >
                <div className="absolute inset-0 bg-[url('https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/76.9455,43.2372,12,0/800x400?access_token=YOUR_TOKEN')] bg-cover bg-center opacity-50 grayscale group-hover:grayscale-0 transition-all duration-500" />
                <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors" />
                
-               <div className="relative z-10 bg-white/90 backdrop-blur px-6 py-3 rounded-full shadow-xl border border-gray-200 flex items-center gap-2">
+               <div className="relative z-10 bg-white/90 backdrop-blur px-6 py-3 rounded-full shadow-xl border border-gray-200 flex items-center gap-2 transition-transform group-hover:scale-105">
                   <MapPin className="text-[#ff8c00] animate-bounce" />
-                  <span className="font-bold text-gray-900">Посмотреть на карте</span>
+                  <span className="font-bold text-gray-900">Посмотреть на карте (2GIS)</span>
                </div>
-            </div>
+            </a>
 
           </div>
         </div>

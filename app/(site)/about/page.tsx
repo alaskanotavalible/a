@@ -36,59 +36,42 @@ export default function AboutPage() {
   return (
     <>
       {/* 1. HERO SLIDER */}
-      <section className="relative h-screen min-h-[600px] bg-black group">
-        <Swiper
-          modules={[Navigation, Pagination, Autoplay, EffectFade]}
-          effect="fade"
-          fadeEffect={{ crossFade: true }}
-          speed={1000}
-          autoplay={{ delay: 6000, disableOnInteraction: false }}
-          loop={true}
-          navigation={{
-            nextEl: '.swiper-next',
-            prevEl: '.swiper-prev',
-          }}
-          pagination={{ clickable: true }}
-          className="h-full w-full"
-        >
-          {heroSlides.map((slide) => (
-            <SwiperSlide key={slide.id}>
-              <div className="relative h-full w-full">
-                <div 
-                  className="absolute inset-0 bg-cover bg-center animate-ken-burns"
-                  style={{ backgroundImage: `url(${slide.image})` }}
-                />
-                <div className="absolute inset-0 bg-black/60" />
-                
-                <Container className="relative z-10 h-full flex flex-col justify-center pb-12">
-                  <div className="max-w-4xl space-y-8 animate-fade-in-up">
-                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/20 bg-white/10 text-white/90 text-sm backdrop-blur-md w-fit">
-                      <span className="w-2 h-2 rounded-full bg-[#ff8c00] animate-pulse"/>
-                      Сделано в Казахстане
-                    </div>
-                    <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white leading-[1.1] tracking-tight">
-                      {slide.title}
-                    </h1>
-                    <p className="text-lg md:text-2xl text-gray-200 max-w-2xl font-light leading-relaxed">
-                      {slide.subtitle}
-                    </p>
-                    <div className="flex gap-4 pt-4">
-                       <Button className="rounded-full px-8 text-lg bg-[#ff8c00] text-white hover:bg-[#e07b00] border-0">
-                         Смотреть каталог
-                       </Button>
-                    </div>
-                  </div>
-                </Container>
-              </div>
-            </SwiperSlide>
-          ))}
-          <button className="swiper-prev absolute left-8 top-1/2 z-20 text-white/50 hover:text-white transition-colors hidden md:block p-2">
-            <ArrowRight className="rotate-180 w-10 h-10" />
-          </button>
-          <button className="swiper-next absolute right-8 top-1/2 z-20 text-white/50 hover:text-white transition-colors hidden md:block p-2">
-            <ArrowRight className="w-10 h-10" />
-          </button>
-        </Swiper>
+{/* 1. HERO: МАНИФЕСТ (Вместо слайдера/видео) */}
+<section className="relative h-[70vh] min-h-[500px] w-full flex items-center justify-center overflow-hidden bg-zinc-900">
+        
+        {/* Фоновое изображение (статичное, но с эффектом глубины) */}
+        <div 
+          className="absolute inset-0 bg-[url('/slide-factory.jpg')] bg-cover bg-center opacity-50 grayscale hover:grayscale-0 transition-all duration-[2s]" 
+        />
+        
+        {/* Градиент, чтобы текст читался */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-background" />
+
+        <Container className="relative z-10 text-center">
+          <div className="space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+            
+            {/* Надзаголовок */}
+            <div className="inline-flex items-center gap-3 text-[#ff8c00] font-bold tracking-[0.3em] uppercase text-xs md:text-sm">
+              <span className="w-8 h-[2px] bg-[#ff8c00]" />
+              Философия SNN
+              <span className="w-8 h-[2px] bg-[#ff8c00]" />
+            </div>
+
+            {/* Главный заголовок */}
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white leading-[0.9] tracking-tight">
+              МЫ УПРАВЛЯЕМ <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff8c00] to-yellow-500">
+                ТЕПЛОМ
+              </span>
+            </h1>
+
+            {/* Описание */}
+            <p className="text-lg md:text-2xl text-gray-300 max-w-3xl mx-auto font-light leading-relaxed">
+              25 лет опыта в тяжелой металлургии. Мы взяли технологии для поездов и нефтепроводов, чтобы создать радиатор, который никогда не подведет.
+            </p>
+
+          </div>
+        </Container>
       </section>
 
       {/* 2. МАСШТАБ */}
