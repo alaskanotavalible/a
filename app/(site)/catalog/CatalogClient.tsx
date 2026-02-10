@@ -49,8 +49,6 @@ export default function CatalogClient() {
                 onHeightChange={setHeight}
                 selectedDepth={depth}
                 onDepthChange={setDepth}
-                selectedColor={color}
-                onColorChange={setColor}
                 onReset={resetFilters}
                 totalCount={filteredProducts.length}
               />

@@ -9,9 +9,6 @@ interface FiltersProps {
   selectedDepth: number | null;
   onDepthChange: (d: number | null) => void;
 
-  selectedColor: string | null;
-  onColorChange: (c: string | null) => void;
-
   onReset: () => void;
   totalCount: number;
 }
@@ -21,18 +18,10 @@ export default function Filters({
   onHeightChange,
   selectedDepth,
   onDepthChange,
-  selectedColor,
-  onColorChange,
   onReset,
   totalCount,
 }: FiltersProps) {
   
-  const colors = [
-    { name: "Белый", bgClass: "bg-white", borderClass: "border-gray-200" },
-    { name: "Черный", bgClass: "bg-zinc-900", borderClass: "border-zinc-800" },
-    { name: "Серебро", bgClass: "bg-gray-400", borderClass: "border-gray-400" },
-  ];
-
   return (
     <div className="bg-card border border-border rounded-3xl p-6 shadow-xl">
       {/* Заголовок + Сброс */}
@@ -41,7 +30,7 @@ export default function Filters({
           <h3 className="text-sm font-bold text-foreground uppercase tracking-widest">Фильтры</h3>
           <p className="text-xs text-muted mt-1">Быстрый подбор</p>
         </div>
-        {(selectedHeight || selectedDepth || selectedColor) && (
+        {(selectedHeight || selectedDepth) && (
           <button
             onClick={onReset}
             className="text-xs text-heat hover:underline font-bold transition-colors flex items-center gap-1"
@@ -92,29 +81,6 @@ export default function Filters({
                 }`}
               >
                 {d}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* 3. Цвет */}
-        <div className="space-y-3">
-          <div className="text-xs font-bold text-muted uppercase tracking-wider">
-            Цвет
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {colors.map((c) => (
-              <button
-                key={c.name}
-                onClick={() => onColorChange(selectedColor === c.name ? null : c.name)}
-                className={`px-3 py-2 rounded-xl text-xs font-bold border transition-all flex items-center gap-2 ${
-                  selectedColor === c.name
-                    ? "bg-secondary border-heat text-foreground ring-1 ring-heat"
-                    : "bg-background border-border text-muted hover:border-foreground/30 hover:text-foreground"
-                }`}
-              >
-                <span className={`w-3 h-3 rounded-full border ${c.bgClass} ${c.borderClass}`} />
-                {c.name}
               </button>
             ))}
           </div>

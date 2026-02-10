@@ -7,6 +7,7 @@ import { pageMeta } from "@/lib/seo";
 import Certificates from "@/components/Certificates";
 import Calculator from "@/components/Calc";
 import HomeHero from "@/components/HomeHero";
+import ProductionSection from "@/components/ProductionSection"; //
 
 export const metadata = pageMeta({
   title: "Главная",
@@ -108,7 +109,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <HomeHero />
+
 
       {/* FEATURED */}
       <section className="py-20 bg-background relative border-b border-border transition-colors duration-300">
@@ -151,7 +152,8 @@ export default function HomePage() {
         <Container className="mb-4 text-center">
             <p className="text-xs text-muted uppercase tracking-widest font-bold">Наши радиаторы установлены в ЖК:</p>
         </Container>
-        
+
+
         <div className="relative flex overflow-x-hidden group">
             <div className="animate-marquee whitespace-nowrap flex gap-16 min-w-full items-center opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
             {/* Названия ЖК / Бренды - цвет text-foreground для адаптации */}
