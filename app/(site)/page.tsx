@@ -112,40 +112,7 @@ export default function HomePage() {
 
 
       {/* FEATURED */}
-      <section className="py-20 bg-background relative border-b border-border transition-colors duration-300">
-         <div className="absolute top-1/2 left-0 w-[300px] h-[300px] bg-heat/5 blur-[100px] rounded-full pointer-events-none" />
-
-        <Container>
-          <div className="flex items-end justify-between gap-4 mb-10">
-            <div>
-               <span className="text-heat font-bold uppercase tracking-widest text-xs mb-2 block">Каталог</span>
-               <h2 className="text-3xl md:text-4xl font-bold text-foreground">Популярные модели</h2>
-               <p className="mt-4 text-muted max-w-xl text-sm leading-relaxed">
-                  Демо-линейка: высота 350/500, секции 6–14. 
-                  Идеальная геометрия и максимальная теплоотдача.
-               </p>
-            </div>
-            
-            <Link href="/catalog" className="hidden sm:block">
-              <Button variant="outline" className="bg-transparent border-border text-foreground hover:bg-secondary">Смотреть всё</Button>
-            </Link>
-          </div>
-
-          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {featured.map((p) => (
-              <ProductCard key={p.id} product={p} />
-            ))}
-          </div>
-
-          <div className="mt-8 sm:hidden">
-            <Link href="/catalog">
-              <Button variant="outline" className="w-full bg-transparent border-border text-foreground">
-                Смотреть весь каталог
-              </Button>
-            </Link>
-          </div>
-        </Container>
-      </section>
+     
 
       {/* Бегущая строка (Marquee) */}
       <section className="py-10 border-y border-border bg-secondary/30 overflow-hidden">

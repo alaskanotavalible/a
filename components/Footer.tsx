@@ -3,10 +3,12 @@ import { Container, Button } from "@/components/ui";
 import { Instagram, Phone, Mail, MapPin } from "lucide-react";
 
 const links = [
-  { label: "Каталог", href: "/catalog" },
+  { label: "Конфигуратор", href: "/catalog" },
   { label: "О компании", href: "/about" },
   { label: "Для дилеров", href: "/dealers" },
-  { label: "Контакты", href: "/contacts" }
+  { label: "Контакты", href: "/contacts" },
+  { label: "Где купить", href: "/where-to-buy" }
+  
 ];
 
 export default function Footer() {
