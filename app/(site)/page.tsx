@@ -73,7 +73,7 @@ export default function HomePage() {
               <Link href="/catalog">
                 {/* Кнопка "Открыть каталог" - Ярко-оранжевая */}
                 <Button className="w-full sm:w-auto bg-[#ff8c00] hover:bg-[#e07b00] text-white border-0 px-8 py-4 text-lg shadow-[0_0_20px_rgba(255,140,0,0.4)] transition-transform hover:scale-105">
-                  Открыть каталог
+                  Открыть конфигуратор
                 </Button>
               </Link>
               <Link href="/about">

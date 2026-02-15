@@ -202,8 +202,6 @@ export default function CatalogClient() {
 
               <div className="pt-6 border-t border-border space-y-4">
                 <div className="flex justify-between items-center text-foreground font-black uppercase tracking-tighter text-xl">
-                  <span>Ориентир:</span>
-                  <span className="text-heat">{calculatePrice()} ₸</span>
                 </div>
                 <Button 
                   onClick={() => open("request")}
