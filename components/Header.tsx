@@ -10,7 +10,7 @@ import { useState, useEffect } from "react";
 
 const navLinks = [
   { href: "/", label: "Главная" },
-  { href: "/catalog", label: "Каталог" },
+  { href: "/catalog", label: "Конфигуратор" },
   { href: "/where-to-buy", label: "Где купить" },
   { href: "/dealers", label: "Дилерам" },
   { href: "/contacts", label: "Контакты" },
