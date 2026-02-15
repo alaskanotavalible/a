@@ -175,33 +175,56 @@ export default function HomePage() {
 
       <Certificates />
       
-      {/* TRUST */}
-      <section id="trust" className="bg-background py-20 border-t border-border transition-colors duration-300">
+{/* TRUST */}
+<section id="trust" className="bg-background py-20 border-t border-border transition-colors duration-300">
         <Container>
           <div className="mb-12">
-            <span className="text-heat font-bold uppercase tracking-widest text-xs mb-2 block">Доверие</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Почему нам доверяют</h2>
-            <p className="mt-4 text-muted max-w-2xl text-lg">
-                Мы делаем ставку на стабильность, аккуратную эстетику и предсказуемое качество.
-            </p>
+            <span className="text-heat font-bold uppercase tracking-widest text-xs mb-2 block">Технологии & Доверие</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Настоящий биметалл — без компромиссов</h2>
+            
+            <div className="mt-8 grid md:grid-cols-2 gap-12 items-start">
+              <div className="space-y-4 text-muted text-lg leading-relaxed">
+                <p>
+                  Долгое время биметаллическими называли радиаторы, в конструкции которых присутствовал лишь частичный стальной элемент. При этом теплоноситель всё равно контактировал с алюминием, что со временем могло приводить к коррозии и снижению надёжности.
+                </p>
+                <p className="font-medium text-foreground">
+                  Сегодня стандарт биметаллических радиаторов — это 100% защита от агрессивного теплоносителя.
+                </p>
+                <p>
+                  Именно таким стандартам соответствуют 100% биметаллические радиаторы <span className="text-heat font-bold italic text-foreground">Thermo</span> с полностью стальным коллектором.
+                </p>
+              </div>
+
+              <div className="space-y-4 text-muted text-lg leading-relaxed border-l-2 border-heat/20 pl-6">
+                <p>
+                  В этих радиаторах теплоноситель полностью изолирован от алюминиевого сплава, что гарантирует максимальную устойчивость к коррозии, перепадам давления и гидроударам. 
+                </p>
+                <p>
+                  Вертикальные и горизонтальные элементы коллектора соединяются методом контактной сварки на современном высокоточном оборудовании, обеспечивая исключительную прочность конструкции и герметичность на весь срок службы.
+                </p>
+                <p className="text-sm italic italic text-foreground">
+                  *Thermo* — это настоящий биметалл, созданный для максимальной надёжности и долгой службы без риска.
+                </p>
+              </div>
+            </div>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-3 mt-16">
             {[
               {
-                title: "Контроль качества",
-                text: "Проверка герметичности и стабильности теплоотдачи. Радиатор должен работать годами."
+                title: "100% Стальной коллектор",
+                text: "Теплоноситель полностью изолирован от алюминия. Радиатор стабильно работает даже с агрессивными антифризами."
               },
               {
                 title: "Надёжность системы",
-                text: "Биметалл уверенно держит нагрузки (до 30 атм) и подходит для большинства высотных объектов."
+                text: "Биметалл уверенно держит нагрузки (до 30 атм) и защищен от гидроударов в высотных объектах."
               },
               {
-                title: "Премиальный минимализм",
-                text: "Визуально чистый продукт. Он не спорит с интерьером — он его дополняет."
+                title: "Контроль сварки",
+                text: "Соединение элементов методом контактной сварки гарантирует герметичность на протяжении всего срока службы."
               }
             ].map((b) => (
-              <div key={b.title} className="p-8 rounded-3xl border border-border bg-card shadow-sm hover:shadow-md transition-all">
+              <div key={b.title} className="p-8 rounded-3xl border border-border bg-card shadow-sm hover:shadow-md transition-all border-b-4 border-b-heat/30">
                 <div className="text-xl font-bold text-foreground mb-3">
                   {b.title}
                 </div>
@@ -209,7 +232,7 @@ export default function HomePage() {
                   {b.text}
                 </p>
                 <div className="mt-6 pt-6 border-t border-border text-xs text-muted">
-                  гарантия · сервис · поддержка
+                  промышленный стандарт · контроль качества
                 </div>
               </div>
             ))}
