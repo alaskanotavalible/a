@@ -12,10 +12,17 @@ function RadiatorModel({ color, height, depth, sections }: { color: string; heig
   const { scene } = useGLTF("/models/section.glb");
   
   useEffect(() => {
-    // Красим базовую модель (все клоны автоматически получат этот цвет)
     scene.traverse((child: any) => {
       if (child.isMesh) {
         child.material.color.set(color);
+        
+        // --- НОВЫЕ СТРОКИ ---
+        // Делаем краску слегка глянцевой (сатиновой), чтобы появились блики на ребрах
+        child.material.roughness = 0.45; // Чем меньше, тем больше глянца (от 0 до 1)
+        child.material.metalness = 0.15; // Легкий металлический отблеск краски (от 0 до 1)
+        child.material.needsUpdate = true; // Принудительно обновляем материал
+        // --------------------
+
         child.castShadow = true;
         child.receiveShadow = true;
       }
@@ -62,7 +69,7 @@ export default function CatalogClient() {
   const [height, setHeight] = useState(500);
   const [depth, setDepth] = useState(80);
   const [sections, setSections] = useState(10);
-  const [color, setColor] = useState("#ff8c00");
+  const [color, setColor] = useState("#ffffff");
 
   const colors = [
     { name: "Белый (RAL 9016)", hex: "#ffffff" },

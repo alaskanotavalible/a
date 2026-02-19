@@ -2,7 +2,7 @@
 
 import { Container, Button } from "@/components/ui";
 import { useModal } from "@/components/ModalProvider";
-import { Instagram, MessageCircle, Phone, Mail, MapPin, ExternalLink } from "lucide-react";
+import { Instagram, MessageCircle, Phone, Mail, MapPin, ChevronRight } from "lucide-react";
 import Link from "next/link";
 
 export default function ContactsClient() {
@@ -15,135 +15,114 @@ export default function ContactsClient() {
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-heat/10 blur-[120px] rounded-full pointer-events-none opacity-40" />
 
       <Container className="relative z-10">
-        <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between mb-12">
-          <div>
-             <span className="text-heat font-bold uppercase tracking-widest text-xs mb-2 block">
-                Контакты
-             </span>
-             <h1 className="text-4xl font-bold text-foreground mb-4">
-                Связь с Triumph Thermo
-             </h1>
-             <p className="text-muted max-w-xl text-lg">
-                Завод в Павлодаре. Работаем по всему Казахстану. 
-                Пишите в WhatsApp или звоните — ответим быстро.
-             </p>
-          </div>
+        <div className="grid gap-12 lg:grid-cols-2 lg:gap-20 items-start">
           
-          <div className="flex items-center gap-2 rounded-full border border-border bg-secondary/50 px-4 py-2 text-sm text-muted">
-            <span className="h-2 w-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_#22c55e]" />
-            Сейчас работаем
-          </div>
-        </div>
+          {/* ЛЕВАЯ ЧАСТЬ: Заголовок и Контакты (как на референсе) */}
+          <div className="flex flex-col h-full">
+            <span className="text-heat font-bold uppercase tracking-widest text-xs mb-4 block">
+              Контакты
+            </span>
+            <h1 className="text-4xl md:text-5xl font-black text-foreground mb-6 leading-tight">
+              Связь с Tengri Thermo
+            </h1>
+            <p className="text-muted max-w-md text-base md:text-lg mb-12">
+              Если вы хотите сделать оптовый заказ, задать вопрос по конфигурации или рассчитать проект — напишите нам, ответим быстро!
+            </p>
 
-        <div className="grid gap-6 md:grid-cols-2">
-          
-          {/* КАРТОЧКА 1: Контакты и Соцсети */}
-          <div className="rounded-3xl border border-border bg-card p-8 flex flex-col h-full hover:border-heat/30 transition-colors shadow-sm">
-            <div className="text-xl font-bold text-foreground mb-6 flex items-center gap-2">
-              <Phone className="w-5 h-5 text-heat" />
-              Отдел продаж
-            </div>
-            
-            <div className="grid gap-4 text-sm text-muted mb-8">
-              
+            {/* Сетка контактов */}
+            <div className="grid sm:grid-cols-2 gap-y-10 gap-x-8 text-sm">
+              {/* Адрес */}
+              <div>
+                <div className="text-muted mb-2 font-medium">Адрес завода</div>
+                <div className="text-foreground font-bold text-lg mb-1">г. Павлодар</div>
+                <div className="text-muted">Северная промзона, 52</div>
+              </div>
+
               {/* Телефон */}
-              <div className="rounded-xl border border-border bg-secondary/30 px-5 py-4 flex flex-col gap-1">
-                <span className="text-xs text-muted uppercase tracking-wider mb-1">Единый номер / WhatsApp</span>
-                <a href="tel:+77761346303" className="text-2xl font-bold text-foreground hover:text-heat transition-colors">
+              <div>
+                <div className="text-muted mb-2 font-medium">Телефон</div>
+                <a href="tel:+77761346303" className="text-foreground font-bold text-lg hover:text-heat transition-colors block mb-1">
                   +7 (776) 134 63 03
+                </a>
+                <div className="flex items-center gap-2 text-xs text-muted">
+                  <span className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />
+                  Сейчас работаем
+                </div>
+              </div>
+
+              {/* Почта */}
+              <div>
+                <div className="text-muted mb-2 font-medium">Email</div>
+                <a href="mailto:cnn_pavlodar@mail.ru" className="text-foreground font-bold text-lg hover:text-heat transition-colors">
+                  cnn_pavlodar@mail.ru
                 </a>
               </div>
 
-              {/* Адрес и Почта */}
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="rounded-xl border border-border bg-secondary/30 px-5 py-4 flex flex-col gap-1">
-                   <div className="flex items-center gap-2 mb-1">
-                      <MapPin className="w-4 h-4 text-heat" />
-                      <span className="text-xs text-muted uppercase tracking-wider">Адрес завода</span>
-                   </div>
-                   <span className="text-foreground font-medium">
-                     г. Павлодар,<br/> Северная промзона, 52
-                   </span>
-                </div>
-                <div className="rounded-xl border border-border bg-secondary/30 px-5 py-4 flex flex-col gap-1">
-                   <div className="flex items-center gap-2 mb-1">
-                      <Mail className="w-4 h-4 text-heat" />
-                      <span className="text-xs text-muted uppercase tracking-wider">Email</span>
-                   </div>
-                   <a href="mailto:cnn_pavlodar@mail.ru" className="text-foreground font-medium hover:text-heat">
-                     cnn_pavlodar@mail.ru
-                   </a>
+              {/* Соцсети */}
+              <div>
+                <div className="text-muted mb-2 font-medium">Социальные сети</div>
+                <div className="flex flex-col gap-2">
+                  <Link href="https://www.instagram.com/_triumphthermo_" target="_blank" className="text-foreground font-bold hover:text-[#E1306C] transition-colors flex items-center gap-2">
+                    <Instagram className="w-4 h-4" /> Instagram
+                  </Link>
+                  <Link href="https://wa.me/77761346303" target="_blank" className="text-foreground font-bold hover:text-[#25D366] transition-colors flex items-center gap-2">
+                    <MessageCircle className="w-4 h-4" /> WhatsApp
+                  </Link>
                 </div>
               </div>
-
-              {/* Кнопки соцсетей */}
-              <div className="grid grid-cols-2 gap-3 mt-2">
-                <Link 
-                  href="https://wa.me/77761346303" 
-                  target="_blank"
-                  className="flex items-center justify-center gap-2 rounded-xl bg-[#25D366]/10 text-[#25D366] py-3 font-bold hover:bg-[#25D366] hover:text-white transition-all"
-                >
-                  <MessageCircle className="w-5 h-5" />
-                  WhatsApp
-                </Link>
-                <Link 
-                  href="https://www.instagram.com/_triumphthermo_" 
-                  target="_blank"
-                  className="flex items-center justify-center gap-2 rounded-xl bg-[#E1306C]/10 text-[#E1306C] py-3 font-bold hover:bg-[#E1306C] hover:text-white transition-all"
-                >
-                  <Instagram className="w-5 h-5" />
-                  Instagram
-                </Link>
-              </div>
-            </div>
-
-            <div className="mt-auto pt-6 border-t border-border">
-               <p className="text-xs text-muted">
-                 ООО Фирма "СНН". Производство радиаторов отопления и промышленное литье.
-               </p>
             </div>
           </div>
 
-          {/* КАРТОЧКА 2: Форма заявки */}
-          <div className="rounded-3xl border border-border bg-card p-8 flex flex-col h-full hover:border-heat/30 transition-colors shadow-sm relative overflow-hidden group">
-            {/* Декор фона */}
-            <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-heat/5 rounded-full blur-3xl group-hover:bg-heat/10 transition-colors" />
+          {/* ПРАВАЯ ЧАСТЬ: Форма заявки (в стиле Evatherm) */}
+          <div className="rounded-3xl bg-secondary/20 p-6 sm:p-10 flex flex-col h-full border border-border/50 relative overflow-hidden">
+             <form className="flex flex-col gap-4 relative z-10">
+                <input 
+                  type="text" 
+                  placeholder="Ваше имя" 
+                  className="w-full bg-secondary/50 border-0 rounded-xl px-5 py-4 text-foreground placeholder:text-muted focus:ring-2 focus:ring-heat focus:outline-none transition-all"
+                />
+                <input 
+                  type="tel" 
+                  placeholder="+7 (___) ___-__-__" 
+                  className="w-full bg-secondary/50 border-0 rounded-xl px-5 py-4 text-foreground placeholder:text-muted focus:ring-2 focus:ring-heat focus:outline-none transition-all"
+                />
+                <input 
+                  type="email" 
+                  placeholder="Почта" 
+                  className="w-full bg-secondary/50 border-0 rounded-xl px-5 py-4 text-foreground placeholder:text-muted focus:ring-2 focus:ring-heat focus:outline-none transition-all"
+                />
+                <textarea 
+                  placeholder="Сообщение" 
+                  rows={4}
+                  className="w-full bg-secondary/50 border-0 rounded-xl px-5 py-4 text-foreground placeholder:text-muted focus:ring-2 focus:ring-heat focus:outline-none transition-all resize-none"
+                />
+                
+                <label className="flex items-start gap-3 mt-2 mb-4 cursor-pointer group">
+                  <div className="relative flex items-center justify-center mt-0.5">
+                    <input 
+                      type="checkbox" 
+                      className="peer appearance-none w-5 h-5 border-2 border-muted rounded bg-transparent checked:bg-heat checked:border-heat focus:outline-none transition-all cursor-pointer"
+                    />
+                    <svg className="absolute w-3 h-3 text-white opacity-0 peer-checked:opacity-100 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <span className="text-sm text-muted group-hover:text-foreground transition-colors leading-snug">
+                    Я согласен с <Link href="#" className="text-heat hover:underline">политикой конфиденциальности</Link>
+                  </span>
+                </label>
 
-            <div className="text-xl font-bold text-foreground mb-2 relative z-10">
-              Оставить заявку на расчёт
-            </div>
-            <p className="text-sm leading-relaxed text-muted mb-8 relative z-10">
-              Мы бесплатно рассчитаем количество секций для вашего помещения и пришлем коммерческое предложение.
-            </p>
-
-            <div className="flex flex-col gap-4 relative z-10 mb-8">
-              {/* Кнопка открытия модалки */}
-              <Button 
-                 onClick={() => open("request")}
-                 className="w-full text-lg bg-[#ff8c00] hover:bg-[#e07b00] text-white border-0 py-6"
-              >
-                Заполнить форму
-              </Button>
-              
-              {/* Кнопка звонка */}
-              <Button 
-                 variant="outline" 
-                 onClick={() => open("call")}
-                 className="w-full py-6 border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-800"
-              >
-                Заказать обратный звонок
-              </Button>
-            </div>
-
-            <div className="mt-auto rounded-2xl border border-border bg-secondary/30 p-5 relative z-10">
-              <div className="flex items-start gap-3">
-                <span className="text-2xl mt-1">🏭</span> 
-                <div className="text-sm text-muted">
-                  <span className="text-foreground font-bold block mb-1">Работаем с оптом и розницей</span>
-                  Комплектуем строительные объекты, работаем с дилерами и частными клиентами.
+                {/* Кнопка как на референсе: прозрачная с контуром и стрелочкой */}
+                <div className="flex sm:justify-start">
+                  <Button 
+                    type="button"
+                    className="group bg-transparent border-2 border-heat text-heat hover:bg-heat hover:text-white px-8 py-6 text-sm font-bold uppercase tracking-wider rounded-xl flex items-center gap-2 transition-all w-full sm:w-auto"
+                  >
+                    Связаться
+                    <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </Button>
                 </div>
-              </div>
-            </div>
+             </form>
           </div>
 
         </div>

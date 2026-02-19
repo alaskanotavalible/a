@@ -20,7 +20,7 @@ export default function Footer() {
           {/* 1. Логотип и описание */}
           <div>
             <div className="text-lg font-bold tracking-widest text-foreground uppercase flex items-center gap-2">
-              Triumph Thermo
+              Tengri Thermo
             </div>
             <p className="mt-4 text-sm leading-relaxed text-muted">
               Первый завод полного цикла в Казахстане. 
@@ -101,7 +101,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-12 border-t border-border pt-8 text-xs text-muted flex flex-col sm:flex-row justify-between gap-4">
-          <div>© 2026 Triumph Thermo. Все права защищены.</div>
+          <div>© 2026 Tengri Thermo. Все права защищены.</div>
           <div className="flex items-center gap-2">
             Сделано в Казахстане 
             <span className="text-base">🇰🇿</span>

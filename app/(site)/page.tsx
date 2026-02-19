@@ -87,9 +87,9 @@ export default function HomePage() {
             {/* Характеристики (Плашки поверх видео) */}
             <div className="mt-12 grid grid-cols-2 md:grid-cols-3 gap-4 max-w-2xl">
                 {[
-                  { label: "Давление", val: "30 атм" },
+                  { label: "сделано", val: "в Казахстане" },
                   { label: "Гарантия", val: "10 лет" },
-                  { label: "Секций", val: "6–14 шт" },
+                  { label: "Секций", val: "2-25 шт" },
                 ].map((item) => (
                   <div key={item.label} className="rounded-xl border border-white/10 bg-black/40 px-5 py-3 backdrop-blur-md">
                     <div className="text-xs text-white/60 font-bold uppercase tracking-wider mb-1">{item.label}</div>

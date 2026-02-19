@@ -138,9 +138,11 @@ export default function Header() {
           </div>
 
           {/* === НИЖНИЙ ЭТАЖ (Меню ПК) === */}
-          <div className="hidden xl:flex items-center justify-center h-12 bg-gray-50/50 dark:bg-black/50 backdrop-blur-sm border-t border-gray-100 dark:border-white/5">
-             <nav>
-               <ul className="flex items-center gap-12">
+          {/* Увеличили высоту с h-12 на h-14 для большего воздуха */}
+          <div className="hidden xl:flex items-center justify-center h-14 bg-gray-50/50 dark:bg-black/50 backdrop-blur-sm border-t border-gray-100 dark:border-white/5">
+             <nav className="w-full">
+               {/* Заменили gap-12 на gap-16 xl:gap-24 2xl:gap-32, чтобы пункты разлетелись шире */}
+               <ul className="flex items-center justify-center gap-16 xl:gap-24 2xl:gap-32 px-8">
                  {navLinks.map((link) => {
                    const isActive = pathname === link.href;
                    return (
